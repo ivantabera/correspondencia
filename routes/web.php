@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/Correspondencia', function () {  //ruta
+    return view('correspondencia'); //nombre de la carpeta
+});
