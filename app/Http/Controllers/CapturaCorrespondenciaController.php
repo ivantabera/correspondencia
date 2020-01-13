@@ -15,6 +15,7 @@ class CapturaCorrespondenciaController extends Controller
     public function index()
     {
         //
+        return view('correspondencia.index');
     }
 
     /**
@@ -25,6 +26,7 @@ class CapturaCorrespondenciaController extends Controller
     public function create()
     {
         //
+        return view('correspondencia.crear');
     }
 
     /**
@@ -36,6 +38,11 @@ class CapturaCorrespondenciaController extends Controller
     public function store(Request $request)
     {
         //
+        /** Se almacene todo lo que se envia al metodo storage en la variable  $datosCorrespondencia */
+        $datosCorrespondencia = request()->all();
+
+        /**  */
+        return response()->json($datosCorrespondencia);
     }
 
     /**
@@ -47,6 +54,7 @@ class CapturaCorrespondenciaController extends Controller
     public function show(capturaCorrespondencia $capturaCorrespondencia)
     {
         //
+        return view('correspondencia.formulario');
     }
 
     /**
@@ -58,6 +66,7 @@ class CapturaCorrespondenciaController extends Controller
     public function edit(capturaCorrespondencia $capturaCorrespondencia)
     {
         //
+        return view('correspondencia.editar');
     }
 
     /**
@@ -70,6 +79,7 @@ class CapturaCorrespondenciaController extends Controller
     public function update(Request $request, capturaCorrespondencia $capturaCorrespondencia)
     {
         //
+        return view('correspondencia.formulario');
     }
 
     /**
