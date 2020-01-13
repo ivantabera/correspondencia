@@ -39,9 +39,18 @@ class CapturaCorrespondenciaController extends Controller
     {
         //
         /** Se almacene todo lo que se envia al metodo storage en la variable  $datosCorrespondencia */
-        $datosCorrespondencia = request()->all();
+        //$datosCorrespondencia = request()->all();
 
-        /**  */
+        /** Al recabar la informacion evitar que el campo token se inserte en la BD */
+        $datosCorrespondencia = request()->except('_token');
+       
+        /** Recoleccion de la foto */
+        if( $request->hasFile('Foto') ){
+            $datosCorrespondencia['Foto'] = $request->('Foto')->store('uploads','public');
+        }
+
+        capturaCorrespondencia::insert($datosCorrespondencia);
+
         return response()->json($datosCorrespondencia);
     }
 
