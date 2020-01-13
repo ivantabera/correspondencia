@@ -15,7 +15,11 @@ class CapturaCorrespondenciaController extends Controller
     public function index()
     {
         //
-        return view('correspondencia.index');
+        $datos['correspondencia'] = capturaCorrespondencia::paginate(5);
+
+        //return response()->json($datos);
+
+        return view('correspondencia.index', $datos);
     }
 
     /**
@@ -46,7 +50,7 @@ class CapturaCorrespondenciaController extends Controller
        
         /** Recoleccion de la foto */
         if( $request->hasFile('Foto') ){
-            $datosCorrespondencia['Foto'] = $request->('Foto')->store('uploads','public');
+            $datosCorrespondencia['Foto']=$request->file('Foto')->store('uploads','public');
         }
 
         capturaCorrespondencia::insert($datosCorrespondencia);
@@ -72,10 +76,16 @@ class CapturaCorrespondenciaController extends Controller
      * @param  \App\capturaCorrespondencia  $capturaCorrespondencia
      * @return \Illuminate\Http\Response
      */
-    public function edit(capturaCorrespondencia $capturaCorrespondencia)
+    public function edit($id)
     {
-        //
-        return view('correspondencia.editar');
+        // findOrFail() nos da toda la informacion que corresponde a id 
+        $correspondencia = capturaCorrespondencia::findOrFail($id);
+
+        // compact() crea un conjunto de informacino a traves de una variable
+        return view('correspondencia.editar', compact('correspondencia'));
+        
+        //return response()->json($correspondencia);
+
     }
 
     /**
@@ -85,10 +95,18 @@ class CapturaCorrespondenciaController extends Controller
      * @param  \App\capturaCorrespondencia  $capturaCorrespondencia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, capturaCorrespondencia $capturaCorrespondencia)
+    public function update(Request $request, $id)
     {
         //
-        return view('correspondencia.formulario');
+        $datosCorrespondencia = request()->except(['_token','_method']);
+
+        capturaCorrespondencia::where('id', "=", $id)->update($datosCorrespondencia);
+
+        // findOrFail() nos da toda la informacion que corresponde a id 
+        $correspondencia = capturaCorrespondencia::findOrFail($id);
+
+        // compact() crea un conjunto de informacino a traves de una variable
+        return view('correspondencia.editar', compact('correspondencia'));
     }
 
     /**
@@ -97,8 +115,11 @@ class CapturaCorrespondenciaController extends Controller
      * @param  \App\capturaCorrespondencia  $capturaCorrespondencia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(capturaCorrespondencia $capturaCorrespondencia)
+    public function destroy($id)
     {
         //
+        capturaCorrespondencia::destroy($id);
+
+        return redirect('correspondencia');
     }
 }
