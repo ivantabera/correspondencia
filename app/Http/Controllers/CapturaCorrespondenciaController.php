@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\capturaCorrespondencia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CapturaCorrespondenciaController extends Controller
 {
@@ -99,13 +100,21 @@ class CapturaCorrespondenciaController extends Controller
     {
         //
         $datosCorrespondencia = request()->except(['_token','_method']);
-
+        
+        /** Recoleccion de la foto */
+        if( $request->hasFile('Foto') ){
+            
+            $correspondencia = capturaCorrespondencia::findOrFail($id);
+            $borrar=Storage::delete('public/'. $correspondencia->foto);
+            var_dump($borrar);
+            $datosCorrespondencia['Foto']=$request->file('Foto')->store('uploads','public');
+        }
         capturaCorrespondencia::where('id', "=", $id)->update($datosCorrespondencia);
 
         // findOrFail() nos da toda la informacion que corresponde a id 
         $correspondencia = capturaCorrespondencia::findOrFail($id);
 
-        // compact() crea un conjunto de informacino a traves de una variable
+        // compact() crea un conjunto de informacion a traves de una variable
         return view('correspondencia.editar', compact('correspondencia'));
     }
 
@@ -118,8 +127,12 @@ class CapturaCorrespondenciaController extends Controller
     public function destroy($id)
     {
         //
-        capturaCorrespondencia::destroy($id);
-
+        $correspondencia = capturaCorrespondencia::findOrFail($id);
+        
+        if(Storage::delete('public/'. $correspondencia->foto)){
+            capturaCorrespondencia::destroy($id);
+        }
+        
         return redirect('correspondencia');
     }
 }

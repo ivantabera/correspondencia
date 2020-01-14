@@ -26,7 +26,9 @@ Inicio (Despliegue de datos)
                 <td>{{$correspon->dirigido}}</td>
                 <td>{{$correspon->particular}}</td>
                 <td>{{$correspon->asunto}}</td>
-                <td>{{$correspon->foto}}</td>
+                <td>
+                    <img src="{{ asset('storage').'/'.$correspon->foto}}" alt="" width="50">
+                </td>
                 <td>
                     <a href="{{ url('/correspondencia/'.$correspon->id.'/edit') }}">
                         Editar

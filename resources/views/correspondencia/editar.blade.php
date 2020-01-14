@@ -33,7 +33,7 @@ Seccion para editar correspondencia
 
     <label for="Foto">{{'Foto'}}</label>
     <br>
-    {{ $correspondencia->foto }}
+    <img src="{{ asset('storage').'/'.$correspondencia->foto}}" alt="" width="50">
     <br>
     <input type="file" name="Foto" id="Foto" value="{{ $correspondencia->foto }}">
     <br>
