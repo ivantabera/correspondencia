@@ -11,7 +11,7 @@
 
     <a href="{{ url('correspondencia/create') }}" class="btn btn-success">Agregar Correspondencia</a>
     <br><br>
-    <table class="table table-light table-hover">
+    <table class="table table-light table-hover table-responsive-sm table-responsive-md">
 
         <thead class="thead-light">
             <tr>
