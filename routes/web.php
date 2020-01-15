@@ -12,32 +12,33 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
-/**
- * Muestra la vista directamente desde la ruta
- */
+/**Muestra la vista directamente desde la ruta*/
 /*
 Route::get('/correspondencia', function () {
     return view('correspondencia.index');
 });
-
 Route::get('/correspondencia/crear', function () {
     return view('correspondencia.crear');
 });
 */
 
- /**
-  * Generar la ruta para acceder al controlador y muestre la vista
-  */
+ /**Generar la ruta para acceder al controlador y muestre la vista*/
 /*
 Route::get('/correspondencia', 'CapturaCorrespondenciaController@index'); 
 Route::get('/correspondencia/create', 'CapturaCorrespondenciaController@create');
 */
 
-/**
- * Genera la rutas necesarias para acceder al controlador 
- */
-
+/** Genera la rutas necesarias para acceder al controlador */
 Route::resource('correspondencia', 'CapturaCorrespondenciaController');
+
+/*
+modificar la ruta para evitar el registro y el reset del password
+Auth::routes(['register'=>false, 'reset'=>false]);
+*/
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
