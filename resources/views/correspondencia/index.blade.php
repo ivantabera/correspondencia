@@ -3,10 +3,11 @@
 @section('content')
 <div class="container">
 
-    <!--Enviar mensaje-->
-    @if(Session::has('Mensaje')){{
-        Session::get('Mensaje')
-    }}
+    <!--Enviar mensaje de guardado o modificacion-->
+    @if(Session::has('Mensaje'))
+    <div class="alert alert-success" role="alert">
+        {{ Session::get('Mensaje') }}
+    </div>
     @endif
 
     <a href="{{ url('correspondencia/create') }}" class="btn btn-success">Agregar Correspondencia</a>
@@ -56,6 +57,8 @@
         </tbody>
 
     </table>
+
+    {{ $correspondencia->links() }}
 
 </div>
 @endsection

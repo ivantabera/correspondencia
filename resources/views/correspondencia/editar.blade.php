@@ -3,8 +3,6 @@
 @section('content')
 <div class="container">
 
-    Seccion para editar correspondencia
-
     <form action=" {{ url('/correspondencia/'. $correspondencia->id) }} " method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         

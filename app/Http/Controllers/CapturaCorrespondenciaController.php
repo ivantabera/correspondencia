@@ -16,7 +16,7 @@ class CapturaCorrespondenciaController extends Controller
     public function index()
     {
         //
-        $datos['correspondencia'] = capturaCorrespondencia::paginate(5);
+        $datos['correspondencia'] = capturaCorrespondencia::paginate(2);
 
         //return response()->json($datos);
 
