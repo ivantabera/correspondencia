@@ -55,7 +55,7 @@ class CapturaCorrespondenciaController extends Controller
 
         //enviar el mensaje con el atributo si esta erroneo
         $Mensaje = ["required" => 'El campo :attribute es requerido'];
-        //comando para enviar los errores a la vista
+        //metodo validate para enviar los errores a la vista
         $this->validate($request, $campos, $Mensaje);
 
         /** Se almacene todo lo que se envia al metodo storage en la variable  $datosCorrespondencia */
@@ -116,6 +116,26 @@ class CapturaCorrespondenciaController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        //Validacion de que los campos vengan llenos con la informacion correspondiente
+        $campos =[
+            'Referencia' => 'required|string|max:150',
+            'Promotor' => 'required|string|max:150',
+            'Remitente' => 'required|string|max:150',
+            'Dirigido' => 'required|string|max:150',
+            'Particular' => 'required|string|max:150',
+            'Asunto' => 'required|string|max:150'
+        ];
+
+        if( $request->hasFile('Foto') ){
+            $campos += ['Foto' => 'required|max:10000|mimes:jpeg,png,jpg'];
+        }
+
+        //enviar el mensaje con el atributo si esta erroneo
+        $Mensaje = ["required" => 'El campo :attribute es requerido'];
+        //metodo validate para enviar los errores a la vista
+        $this->validate($request, $campos, $Mensaje);
+        
         //
         $datosCorrespondencia = request()->except(['_token','_method']);
         

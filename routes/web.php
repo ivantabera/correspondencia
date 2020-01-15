@@ -32,7 +32,8 @@ Route::get('/correspondencia/create', 'CapturaCorrespondenciaController@create')
 */
 
 /** Genera la rutas necesarias para acceder al controlador */
-Route::resource('correspondencia', 'CapturaCorrespondenciaController');
+/** le agregamos la funcion middleware para inpedir que el usuario pase si no esta logueado */
+Route::resource('correspondencia', 'CapturaCorrespondenciaController')->middleware('auth');
 
 /*
 modificar la ruta para evitar el registro y el reset del password
