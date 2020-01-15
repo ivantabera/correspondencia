@@ -56,7 +56,10 @@ class CapturaCorrespondenciaController extends Controller
 
         capturaCorrespondencia::insert($datosCorrespondencia);
 
-        return response()->json($datosCorrespondencia);
+        //return response()->json($datosCorrespondencia);
+
+        //Enviar mensaje a la vista correspondencia ""with"
+        return redirect('correspondencia')->with('Mensaje','Correspondencia agregada con éxito');
     }
 
     /**
@@ -112,10 +115,11 @@ class CapturaCorrespondenciaController extends Controller
         capturaCorrespondencia::where('id', "=", $id)->update($datosCorrespondencia);
 
         // findOrFail() nos da toda la informacion que corresponde a id 
-        $correspondencia = capturaCorrespondencia::findOrFail($id);
-
+        //$correspondencia = capturaCorrespondencia::findOrFail($id);
         // compact() crea un conjunto de informacion a traves de una variable
-        return view('correspondencia.editar', compact('correspondencia'));
+        //return view('correspondencia.editar', compact('correspondencia'));
+
+        return redirect('correspondencia')->with('Mensaje','La correspondencia con referencia modificada con éxito');
     }
 
     /**
@@ -133,6 +137,7 @@ class CapturaCorrespondenciaController extends Controller
             capturaCorrespondencia::destroy($id);
         }
         
-        return redirect('correspondencia');
+        //return redirect('correspondencia');
+        return redirect('correspondencia')->with('Mensaje','Correspondencia eliminada');
     }
 }
