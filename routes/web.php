@@ -35,6 +35,8 @@ Route::get('/correspondencia/create', 'CapturaCorrespondenciaController@create')
 /** le agregamos la funcion middleware para inpedir que el usuario pase si no esta logueado */
 Route::resource('correspondencia', 'CapturaCorrespondenciaController')->middleware('auth');
 
+Route::resource('promoremit', 'PromoremitController')->middleware('auth');
+
 /*
 modificar la ruta para evitar el registro y el reset del password
 Auth::routes(['register'=>false, 'reset'=>false]);
