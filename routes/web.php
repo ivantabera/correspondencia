@@ -37,6 +37,8 @@ Route::resource('correspondencia', 'CapturaCorrespondenciaController')->middlewa
 
 Route::resource('promoremit', 'PromoremitController')->middleware('auth');
 
+Route::resource('destinatario', 'DestinatarioController')->middleware('auth');
+
 /*
 modificar la ruta para evitar el registro y el reset del password
 Auth::routes(['register'=>false, 'reset'=>false]);

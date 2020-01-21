@@ -154,7 +154,7 @@ class CapturaCorrespondenciaController extends Controller
         // compact() crea un conjunto de informacion a traves de una variable
         //return view('correspondencia.editar', compact('correspondencia'));
 
-        return redirect('correspondencia')->with('Mensaje','La correspondencia con referencia modificada con éxito');
+        return redirect('correspondencia')->with('Mensaje','La correspondencia fue modificada con éxito');
     }
 
     /**

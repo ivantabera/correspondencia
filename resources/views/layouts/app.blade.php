@@ -44,6 +44,12 @@
                             </li>
                     </ul>
 
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('destinatario.index') }}">{{ __('Destinatario') }}</a>
+                            </li>
+                    </ul>
+
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->

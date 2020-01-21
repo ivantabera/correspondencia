@@ -10,38 +10,30 @@
     </div>
     @endif
 
-    <a href="{{ url('promoremit/create') }}" class="btn btn-success">Agregar Promotor/Remitente</a>
+    <a href="{{ url('destinatario/create') }}" class="btn btn-success">Agregar Destinatario</a>
     <br><br>
     <table class="table table-light table-hover table-responsive-sm table-responsive-md">
 
         <thead class="thead-light">
             <tr>
                 <th>#</th>
-                <th>Alias</th>
                 <th>Nombre</th>
-                <th>Encargado</th>
                 <th>Cargo</th>
-                <th>Tipo</th>
-                <th>Extensión</th>
                 <th>Acciones</th>
             </tr>
         </thead>
 
         <tbody>
-            @foreach($promoremit as $promorem)
+            @foreach($destinatario as $destinat)
                 <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td>{{$promorem->alias}}</td>
-                    <td>{{$promorem->nombre}}</td>
-                    <td>{{$promorem->encargado}}</td>
-                    <td>{{$promorem->cargo}}</td>
-                    <td>{{$promorem->tipo}}</td>
-                    <td>{{$promorem->extension}}</td>
+                    <td>{{$destinat->nombre}}</td>
+                    <td>{{$destinat->cargo}}</td>
                     <td>
-                        <a href="{{ url('/promoremit/'.$promorem->id.'/edit') }}" class="btn btn-warning">
+                        <a href="{{ url('/destinatario/'.$destinat->id.'/edit') }}" class="btn btn-warning">
                             Editar
                         </a>
-                        <form method="post" action="{{ url('/promoremit/'.$promorem->id) }}" style="display:inline">
+                        <form method="post" action="{{ url('/destinatario/'.$destinat->id) }}" style="display:inline">
                             {{ csrf_field() }} <!--token para que nos permita acceder-->
                             {{ method_field('DELETE') }} <!--metodo que vamos a ejecutar-->
                             <button type="submit" onclick="return confirm('¿Borrar?')" class="btn btn-danger">Borrar</button>
@@ -54,7 +46,7 @@
 
     </table>
 
-    {{ $promoremit->links() }}
+    {{ $destinatario->links() }}
 
 </div>
 @endsection
