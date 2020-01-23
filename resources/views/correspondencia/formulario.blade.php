@@ -5,17 +5,46 @@
     {!! $errors->first('Referencia','<div class="invalid-feedback">:message</div>') !!}
 </div>
 
-<div class="form-group">
+<!-- <div class="form-group">
     <label class="control-label" for="Promotor">{{'Promotor'}}</label>
     <input type="text" class="form-control {{ $errors->has('Promotor') ? 'is-invalid' : ''  }}" name="Promotor" id="Promotor" value="{{ isset($correspondencia->promotor) ? $correspondencia->promotor : old('Promotor') }}">
-    <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
+    mensaje para mostrar el error si el formulario viene vacio o formato invalido
+    {!! $errors->first('Promotor','<div class="invalid-feedback">:message</div>') !!}
+</div> -->
+
+<div class="form-group">
+    <label class="control-label" for="Promotor">{{'Promotor'}}</label>
+    <select class="form-control {{ $errors->has('Promotor') ? 'is-invalid' : ''  }}" name="Promotor" id="Promotor" value="{{ isset($promoremit->id) ? $promoremit->id : old('Promotor') }}">
+    @if($promotor)
+     <option value="{{$promotor->id}}">{{$promotor->nombre}}</option>
+    @else
+        <option value="0">Selecciona alguna opción</option>
+    @endif
+        <option value="0">Selecciona una opcion</option>
+        @foreach($promoremit as $proremi)
+            <option value="{{$proremi->id}}">{{$proremi->nombre}}</option>
+        <br>
+        @endforeach
+    </select>
     {!! $errors->first('Promotor','<div class="invalid-feedback">:message</div>') !!}
 </div>
 
-<div class="form-group">
+<!-- <div class="form-group">
     <label class="control-label" for="Remitente">{{'Remitente'}}</label>
     <input type="text" class="form-control {{ $errors->has('Remitente') ? 'is-invalid' : ''  }}" name="Remitente" id="Remitente" value="{{ isset($correspondencia->remitente) ? $correspondencia->remitente : old('Remitente') }}">
-    <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
+    mensaje para mostrar el error si el formulario viene vacio o formato invalido
+    {!! $errors->first('Remitente','<div class="invalid-feedback">:message</div>') !!}
+</div> -->
+
+<div class="form-group">
+    <label class="control-label" for="Remitente">{{'Remitente'}}</label>
+    <select class="form-control {{ $errors->has('Remitente') ? 'is-invalid' : ''  }}" name="Remitente" id="Remitente" value="{{ isset($promoremit->nombre) ? $promoremit->nombre : old('Remitente') }}">
+        <option value="0">Selecciona alguna opción</option>
+    @foreach($promoremit as $proremi)
+        <option value="{{$proremi->id}}">{{$proremi->nombre}}</option>
+    <br>
+    @endforeach
+    </select>
     {!! $errors->first('Remitente','<div class="invalid-feedback">:message</div>') !!}
 </div>
 

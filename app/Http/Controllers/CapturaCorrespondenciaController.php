@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\capturaCorrespondencia;
+use App\promoremit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class CapturaCorrespondenciaController extends Controller
 {
@@ -16,11 +18,20 @@ class CapturaCorrespondenciaController extends Controller
     public function index()
     {
         //
-        $datos['correspondencia'] = capturaCorrespondencia::paginate(5);
+         $datos['correspondencia'] = capturaCorrespondencia::paginate(5);
 
         //return response()->json($datos);
 
         return view('correspondencia.index', $datos);
+ 
+        //pruebas
+        /* $corespondencia = DB::table('captura_correspondencias')->get();
+        $users = DB::table('captura_correspondencias')->select('referencia', 'promotor as promo','remitente as hola')->get();
+        //echo json_encode($users);
+        return view('correspondencia.prueba', [
+            'users' => $users,
+            'correspondencia' => $corespondencia
+            ]); */
     }
 
     /**
@@ -31,7 +42,11 @@ class CapturaCorrespondenciaController extends Controller
     public function create()
     {
         //
-        return view('correspondencia.crear');
+        $promoremit = DB::table('promoremits')->get();
+
+        return view('correspondencia.crear', [
+            'promoremit' => $promoremit
+        ]);
     }
 
     /**
@@ -99,9 +114,17 @@ class CapturaCorrespondenciaController extends Controller
     {
         // findOrFail() nos da toda la informacion que corresponde a id 
         $correspondencia = capturaCorrespondencia::findOrFail($id);
-
+        $promoremit = DB::table('promoremits')->get();
+        $promotor = capturaCorrespondencia::find($correspondencia->promotor)->promoremit;
+        
         // compact() crea un conjunto de informacino a traves de una variable
-        return view('correspondencia.editar', compact('correspondencia'));
+        return view('correspondencia.editar', [
+            'promoremit' => $promoremit,
+            'correspondencia' => $correspondencia,
+            'promotor' => $promotor
+        ]);
+
+        // para enviar la variable con el metodo compact('correspondencia')
         
         //return response()->json($correspondencia);
 
@@ -144,9 +167,10 @@ class CapturaCorrespondenciaController extends Controller
             
             $correspondencia = capturaCorrespondencia::findOrFail($id);
             $borrar=Storage::delete('public/'. $correspondencia->foto);
-            var_dump($borrar);
+            //var_dump($borrar);
             $datosCorrespondencia['Foto']=$request->file('Foto')->store('uploads','public');
         }
+        
         capturaCorrespondencia::where('id', "=", $id)->update($datosCorrespondencia);
 
         // findOrFail() nos da toda la informacion que corresponde a id 
