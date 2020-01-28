@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\capturaCorrespondencia;
 use App\promoremit;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -43,9 +44,11 @@ class CapturaCorrespondenciaController extends Controller
     {
         //
         $promoremit = DB::table('promoremits')->get();
+        $now = Carbon::now();
 
         return view('correspondencia.crear', [
-            'promoremit' => $promoremit
+            'promoremit' => $promoremit,
+            'now' => $now
         ]);
     }
 
@@ -83,6 +86,8 @@ class CapturaCorrespondenciaController extends Controller
         if( $request->hasFile('Foto') ){
             $datosCorrespondencia['Foto']=$request->file('Foto')->store('uploads','public');
         }
+
+        //echo json_encode($datosCorrespondencia); exit;
 
         capturaCorrespondencia::insert($datosCorrespondencia);
 
@@ -127,14 +132,17 @@ class CapturaCorrespondenciaController extends Controller
             ->select('promoremits.id', 'promoremits.nombre')
             ->where('captura_correspondencias.id', '=', $correspondencia->id)
             ->get();
+            
+        $now = Carbon::now();
 
-        //echo json_encode($remitente);exit;
+        //echo json_encode($correspondencia);exit;
         
         return view('correspondencia.editar', [
             'correspondencia' => $correspondencia,
             'promoremit' => $promoremit,
             'promotor' => $promotor,
-            'remitente' => $remitente
+            'remitente' => $remitente,
+            'now' => $now
         ]);
 
     }
