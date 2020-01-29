@@ -62,13 +62,26 @@ class CapturaCorrespondenciaController extends Controller
     {
         //Validacion de que los campos vengan llenos con la informacion correspondiente
         $campos =[
-            'Referencia' => 'required|string|max:150',
-            'Promotor' => 'required|string|max:150',
-            'Remitente' => 'required|string|max:150',
-            'Dirigido' => 'required|string|max:150',
-            'Particular' => 'required|string|max:150',
-            'Asunto' => 'required|string|max:150',
-            'Foto' => 'required|max:10000|mimes:jpeg,png,jpg'
+            'num_entrada' => 'required|string|max:150',
+            'date_acuse' => 'required|string|max:150',
+            'hora_acuse' => 'required|string|max:150',
+            'date_elaboracion' => 'required|string|max:150',
+            'referencia' => 'required|string|max:150',
+            'promotor' => 'required|string|max:150',
+            'remitente' => 'required|string|max:150',
+            'dirigido' => 'required|string|max:150',
+            'antecedente' => 'required|string|max:150',
+            'particular' => 'required|string|max:150',
+            'firmado_por' => 'required|string|max:150',
+            'cargo' => 'required|string|max:150',
+            'tipo' => 'required|string|max:150',
+            'expediente' => 'required|string|max:150',
+            'clasificacion' => 'required|string|max:150',
+            'asunto' => 'required|string|max:150',
+            'evento' => 'required|string|max:150',
+            'date_evento' => 'required|string|max:150',
+            'hora_evento' => 'required|string|max:150',
+            'foto' => 'required|max:10000|mimes:jpeg,png,jpg'
         ];
 
         //enviar el mensaje con el atributo si esta erroneo
@@ -83,8 +96,8 @@ class CapturaCorrespondenciaController extends Controller
         $datosCorrespondencia = request()->except('_token');
        
         /** Recoleccion de la foto */
-        if( $request->hasFile('Foto') ){
-            $datosCorrespondencia['Foto']=$request->file('Foto')->store('uploads','public');
+        if( $request->hasFile('foto') ){
+            $datosCorrespondencia['foto']=$request->file('foto')->store('uploads','public');
         }
 
         //echo json_encode($datosCorrespondencia); exit;
@@ -159,16 +172,24 @@ class CapturaCorrespondenciaController extends Controller
 
         //Validacion de que los campos vengan llenos con la informacion correspondiente
         $campos =[
-            'Referencia' => 'required|string|max:150',
-            'Promotor' => 'required|string|max:150',
-            'Remitente' => 'required|string|max:150',
-            'Dirigido' => 'required|string|max:150',
-            'Particular' => 'required|string|max:150',
-            'Asunto' => 'required|string|max:150'
+            'num_entrada' => 'required|string|max:150',
+            'referencia' => 'required|string|max:150',
+            'promotor' => 'required|string|max:150',
+            'remitente' => 'required|string|max:150',
+            'dirigido' => 'required|string|max:150',
+            'antecedente' => 'required|string|max:150',
+            'particular' => 'required|string|max:150',
+            'firmado_por' => 'required|string|max:150',
+            'cargo' => 'required|string|max:150',
+            'tipo' => 'required|string|max:150',
+            'expediente' => 'required|string|max:150',
+            'clasificacion' => 'required|string|max:150',
+            'asunto' => 'required|string|max:150',
+            'evento' => 'required|string|max:150'
         ];
 
-        if( $request->hasFile('Foto') ){
-            $campos += ['Foto' => 'required|max:10000|mimes:jpeg,png,jpg'];
+        if( $request->hasFile('foto') ){
+            $campos += ['foto' => 'required|max:10000|mimes:jpeg,png,jpg'];
         }
 
         //enviar el mensaje con el atributo si esta erroneo
@@ -180,12 +201,12 @@ class CapturaCorrespondenciaController extends Controller
         $datosCorrespondencia = request()->except(['_token','_method']);
         
         /** Recoleccion de la foto */
-        if( $request->hasFile('Foto') ){
+        if( $request->hasFile('foto') ){
             
             $correspondencia = capturaCorrespondencia::findOrFail($id);
             $borrar=Storage::delete('public/'. $correspondencia->foto);
             //var_dump($borrar);
-            $datosCorrespondencia['Foto']=$request->file('Foto')->store('uploads','public');
+            $datosCorrespondencia['foto']=$request->file('foto')->store('uploads','public');
         }
         
         capturaCorrespondencia::where('id', "=", $id)->update($datosCorrespondencia);
