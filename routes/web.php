@@ -41,6 +41,8 @@ Route::resource('destinatario', 'DestinatarioController')->middleware('auth');
 
 Route::resource('expedientes', 'ExpedienteController')->middleware('auth');
 
+Route::resource('tipodocumento', 'TipodocController')->middleware('auth');
+
 /*
 modificar la ruta para evitar el registro y el reset del password
 Auth::routes(['register'=>false, 'reset'=>false]);

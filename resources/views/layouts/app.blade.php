@@ -56,6 +56,12 @@
                             </li>
                     </ul>
 
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('tipodocumento.index') }}">{{ __('Tipo de Documento') }}</a>
+                            </li>
+                    </ul>
+
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
