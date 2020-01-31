@@ -62,6 +62,12 @@
                             </li>
                     </ul>
 
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('dirigido.index') }}">{{ __('Dirigido') }}</a>
+                            </li>
+                    </ul>
+
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->

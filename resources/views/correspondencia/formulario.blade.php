@@ -1,11 +1,11 @@
 <div class="form-group">
-    <label class="control-label" for="num_entrada">{{'Numero de entrada'}}</label>
+    {{-- <label class="control-label" for="num_entrada">{{'Numero de entrada'}}</label> --}}
     <input 
-        type="text" 
+        type="hidden" 
         class="form-control {{ $errors->has('num_entrada') ? 'is-invalid' : ''  }}" 
         name="num_entrada" 
         id="num_entrada" 
-        value="{{ isset($correspondencia->num_entrada) ? $correspondencia->num_entrada : old('num_entrada') }}">
+        value="{{ isset($correspondencia->num_entrada) ? $correspondencia->num_entrada : $consecutivo }}">
     <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
     {!! $errors->first('num_entrada','<div class="invalid-feedback">:message</div>') !!}
 </div>

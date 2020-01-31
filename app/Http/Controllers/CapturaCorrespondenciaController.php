@@ -47,15 +47,16 @@ class CapturaCorrespondenciaController extends Controller
         $now = Carbon::now();
         $tipodocs = DB::table('tipodocs')->get();
 
-        $consecutivo = DB::table('captura_correspondencias as cc')
+        //consecutivo para el numero de entrada
+        $consecutivoNumEntrada = DB::table('captura_correspondencias as cc')
             ->max('cc.num_entrada');
-
-        echo json_encode($consecutivo);exit;
+        $consecutivoNumEntrada ++;
 
         return view('correspondencia.crear', [
             'promoremit' => $promoremit,
             'now' => $now,
-            'tipodocs' => $tipodocs
+            'tipodocs' => $tipodocs,
+            'consecutivo' => $consecutivoNumEntrada
         ]);
     }
 
