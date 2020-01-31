@@ -11,4 +11,4 @@
 </div>
 
 <input type="submit" class="btn btn-success" value="{{$Modo == 'crear' ? 'Agregar' : 'Modificar'}}">
-<a href="{{ url('correspondencia') }}" class="btn btn-primary">Regresar</a>
+<a href="{{ url('tipodocumento') }}" class="btn btn-primary">Regresar</a>
