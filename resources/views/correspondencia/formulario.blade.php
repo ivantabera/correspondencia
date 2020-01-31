@@ -162,13 +162,22 @@
 
 <div class="form-group">
     <label class="control-label" for="tipo">{{'Tipo'}}</label>
-    <input 
-        type="text" 
+    <select 
         class="form-control {{ $errors->has('tipo') ? 'is-invalid' : ''  }}" 
         name="tipo" 
         id="tipo" 
-        value="{{ isset($correspondencia->tipo) ? $correspondencia->tipo : old('tipo') }}">
-    <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
+        value="{{ isset($tipodoc->id) ? $tipodoc->id : old('tipo') }}">
+        @if(isset($tipodoc))
+            <option value="{{$tipodoc[0]->id}}">{{$tipodoc[0]->nombre}}</option>
+        @else
+            <option value="0">Selecciona alguna opción</option>
+        @endif
+        <option value="0">Selecciona una opcion</option>
+            @foreach($tipodocs as $doc)
+                <option value="{{$doc->id}}">{{$doc->nombre}}</option>
+            <br>
+            @endforeach
+    </select>
     {!! $errors->first('tipo','<div class="invalid-feedback">:message</div>') !!}
 </div>
 

@@ -45,10 +45,17 @@ class CapturaCorrespondenciaController extends Controller
         //
         $promoremit = DB::table('promoremits')->get();
         $now = Carbon::now();
+        $tipodocs = DB::table('tipodocs')->get();
+
+        $consecutivo = DB::table('captura_correspondencias as cc')
+            ->max('cc.num_entrada');
+
+        echo json_encode($consecutivo);exit;
 
         return view('correspondencia.crear', [
             'promoremit' => $promoremit,
-            'now' => $now
+            'now' => $now,
+            'tipodocs' => $tipodocs
         ]);
     }
 
@@ -133,6 +140,7 @@ class CapturaCorrespondenciaController extends Controller
         // findOrFail() nos da toda la informacion que corresponde a id 
         $correspondencia = capturaCorrespondencia::findOrFail($id);
         $promoremit = DB::table('promoremits')->get();
+        $tipodocs = DB::table('tipodocs')->get();
 
         $promotor = DB::table('captura_correspondencias')
             ->join('promoremits', 'captura_correspondencias.promotor', '=', 'promoremits.id')
@@ -145,16 +153,24 @@ class CapturaCorrespondenciaController extends Controller
             ->select('promoremits.id', 'promoremits.nombre')
             ->where('captura_correspondencias.id', '=', $correspondencia->id)
             ->get();
+        
+        $tipodoc = DB::table('captura_correspondencias')
+            ->join('tipodocs', 'captura_correspondencias.tipo', '=', 'tipodocs.id')
+            ->select('tipodocs.id', 'tipodocs.nombre')
+            ->where('captura_correspondencias.id', '=', $correspondencia->id)
+            ->get();
             
         $now = Carbon::now();
 
-        //echo json_encode($correspondencia);exit;
+        //echo json_encode($tipodoc);exit;
         
         return view('correspondencia.editar', [
             'correspondencia' => $correspondencia,
             'promoremit' => $promoremit,
+            'tipodocs' => $tipodocs,
             'promotor' => $promotor,
             'remitente' => $remitente,
+            'tipodoc' => $tipodoc,
             'now' => $now
         ]);
 
