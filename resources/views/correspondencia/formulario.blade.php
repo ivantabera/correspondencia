@@ -188,13 +188,21 @@
 
 <div class="form-group">
     <label class="control-label" for="expediente">{{'Expediente'}}</label>
-    <input 
-        type="text" 
-        class="form-control {{ $errors->has('expediente') ? 'is-invalid' : ''  }}" 
+    <select 
+        class="form-control {{ $errors->has('tipo') ? 'is-invalid' : ''  }}" 
         name="expediente" 
         id="expediente" 
-        value="{{ isset($correspondencia->expediente) ? $correspondencia->expediente : old('expediente') }}">
-    <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
+        value="{{ isset($expedient->id) ? $expedient->id : old('expediente') }}">
+        @if(isset($expedient))
+            <option value="{{$expedient[0]->id}}">{{$expedient[0]->nombre}}</option>
+        @else
+            <option value="0">Selecciona alguna opción</option>
+        @endif
+            @foreach($expedientes as $doc)
+                <option value="{{$doc->id}}">{{$doc->nombre}}</option>
+            <br>
+            @endforeach
+    </select>
     {!! $errors->first('expediente','<div class="invalid-feedback">:message</div>') !!}
 </div>
 

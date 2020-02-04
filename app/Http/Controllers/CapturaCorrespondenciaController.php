@@ -47,6 +47,7 @@ class CapturaCorrespondenciaController extends Controller
         $now = Carbon::now();
         $tipodocs = DB::table('tipodocs')->get();
         $dirigidos = DB::table('dirigidos')->get();
+        $expedientes = DB::table('expedientes')->get();
 
 
         //consecutivo para el numero de entrada
@@ -59,6 +60,7 @@ class CapturaCorrespondenciaController extends Controller
             'now' => $now,
             'tipodocs' => $tipodocs,
             'dirigidos' => $dirigidos,
+            'expedientes' => $expedientes,
             'consecutivo' => $consecutivoNumEntrada
         ]);
     }
@@ -146,6 +148,7 @@ class CapturaCorrespondenciaController extends Controller
         $promoremit = DB::table('promoremits')->get();
         $tipodocs = DB::table('tipodocs')->get();
         $dirigidos = DB::table('dirigidos')->get();
+        $expedientes = DB::table('expedientes')->get();
 
         $promotor = DB::table('captura_correspondencias')
             ->join('promoremits', 'captura_correspondencias.promotor', '=', 'promoremits.id')
@@ -171,22 +174,29 @@ class CapturaCorrespondenciaController extends Controller
             ->where('captura_correspondencias.id', '=', $correspondencia->id)
             ->get();
             
+        $expedient = DB::table('captura_correspondencias')
+            ->join('expedientes', 'captura_correspondencias.expediente', '=', 'expedientes.id')
+            ->select('expedientes.id', 'expedientes.nombre')
+            ->where('captura_correspondencias.id', '=', $correspondencia->id)
+            ->get();
+            
         $now = Carbon::now();
 
-        //echo json_encode($dirigido);exit;
+        //echo json_encode($expediente);exit;
         
         return view('correspondencia.editar', [
             'correspondencia' => $correspondencia,
             'promoremit' => $promoremit,
             'tipodocs' => $tipodocs,
             'dirigidos' => $dirigidos,
+            'expedientes' => $expedientes,
             'promotor' => $promotor,
             'remitente' => $remitente,
             'tipodoc' => $tipodoc,
             'dirigido' => $dirigido,
+            'expedient' => $expedient,
             'now' => $now
         ]);
-
     }
 
     /**
