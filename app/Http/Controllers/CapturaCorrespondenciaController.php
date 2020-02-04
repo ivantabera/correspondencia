@@ -46,6 +46,8 @@ class CapturaCorrespondenciaController extends Controller
         $promoremit = DB::table('promoremits')->get();
         $now = Carbon::now();
         $tipodocs = DB::table('tipodocs')->get();
+        $dirigidos = DB::table('dirigidos')->get();
+
 
         //consecutivo para el numero de entrada
         $consecutivoNumEntrada = DB::table('captura_correspondencias as cc')
@@ -56,6 +58,7 @@ class CapturaCorrespondenciaController extends Controller
             'promoremit' => $promoremit,
             'now' => $now,
             'tipodocs' => $tipodocs,
+            'dirigidos' => $dirigidos,
             'consecutivo' => $consecutivoNumEntrada
         ]);
     }
@@ -142,6 +145,7 @@ class CapturaCorrespondenciaController extends Controller
         $correspondencia = capturaCorrespondencia::findOrFail($id);
         $promoremit = DB::table('promoremits')->get();
         $tipodocs = DB::table('tipodocs')->get();
+        $dirigidos = DB::table('dirigidos')->get();
 
         $promotor = DB::table('captura_correspondencias')
             ->join('promoremits', 'captura_correspondencias.promotor', '=', 'promoremits.id')
@@ -160,18 +164,26 @@ class CapturaCorrespondenciaController extends Controller
             ->select('tipodocs.id', 'tipodocs.nombre')
             ->where('captura_correspondencias.id', '=', $correspondencia->id)
             ->get();
+        
+        $dirigido = DB::table('captura_correspondencias')
+            ->join('dirigidos', 'captura_correspondencias.dirigido', '=', 'dirigidos.id')
+            ->select('dirigidos.id', 'dirigidos.nombre')
+            ->where('captura_correspondencias.id', '=', $correspondencia->id)
+            ->get();
             
         $now = Carbon::now();
 
-        //echo json_encode($tipodoc);exit;
+        //echo json_encode($dirigido);exit;
         
         return view('correspondencia.editar', [
             'correspondencia' => $correspondencia,
             'promoremit' => $promoremit,
             'tipodocs' => $tipodocs,
+            'dirigidos' => $dirigidos,
             'promotor' => $promotor,
             'remitente' => $remitente,
             'tipodoc' => $tipodoc,
+            'dirigido' => $dirigido,
             'now' => $now
         ]);
 
@@ -225,6 +237,8 @@ class CapturaCorrespondenciaController extends Controller
             //var_dump($borrar);
             $datosCorrespondencia['foto']=$request->file('foto')->store('uploads','public');
         }
+
+        //echo json_encode($datosCorrespondencia);exit;
         
         capturaCorrespondencia::where('id', "=", $id)->update($datosCorrespondencia);
 

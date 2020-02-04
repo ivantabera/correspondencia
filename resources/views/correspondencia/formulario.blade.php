@@ -70,7 +70,6 @@
         @else
             <option value="0">Selecciona alguna opción</option>
         @endif
-        <option value="0">Selecciona una opcion</option>
             @foreach($promoremit as $proremi)
                 <option value="{{$proremi->id}}">{{$proremi->nombre}}</option>
             <br>
@@ -91,7 +90,6 @@
         @else
             <option value="0">Selecciona alguna opción</option>
         @endif
-        <option value="0">Selecciona una opcion</option>
             @foreach($promoremit as $proremi)
                 <option value="{{$proremi->id}}">{{$proremi->nombre}}</option>
             <br>
@@ -102,13 +100,21 @@
 
 <div class="form-group">
     <label class="control-label" for="dirigido">{{'Dirigido A'}}</label>
-    <input 
-        type="text" 
+    <select 
         class="form-control {{ $errors->has('dirigido') ? 'is-invalid' : ''  }}" 
         name="dirigido" 
         id="dirigido" 
-        value="{{ isset($correspondencia->dirigido) ? $correspondencia->dirigido : old('dirigido') }}">
-    <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
+        value="{{ isset($dirigidos->id) ? $dirigidos->id : old('dirigido') }}">
+        @if(isset($dirigido))
+        <option value="{{$dirigido[0]->id}}">{{$dirigido[0]->nombre}}</option>
+        @else
+            <option value="0">Selecciona alguna opción</option>
+        @endif
+            @foreach($dirigidos as $diri)
+                <option value="{{$diri->id}}">{{$diri->nombre}}</option>
+            <br>
+            @endforeach
+    </select>
     {!! $errors->first('dirigido','<div class="invalid-feedback">:message</div>') !!}
 </div>
 
@@ -172,7 +178,6 @@
         @else
             <option value="0">Selecciona alguna opción</option>
         @endif
-        <option value="0">Selecciona una opcion</option>
             @foreach($tipodocs as $doc)
                 <option value="{{$doc->id}}">{{$doc->nombre}}</option>
             <br>
