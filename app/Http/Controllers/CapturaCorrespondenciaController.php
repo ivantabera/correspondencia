@@ -24,15 +24,6 @@ class CapturaCorrespondenciaController extends Controller
         //return response()->json($datos);
 
         return view('correspondencia.index', $datos);
- 
-        //pruebas
-        /* $corespondencia = DB::table('captura_correspondencias')->get();
-        $users = DB::table('captura_correspondencias')->select('referencia', 'promotor as promo','remitente as hola')->get();
-        //echo json_encode($users);
-        return view('correspondencia.prueba', [
-            'users' => $users,
-            'correspondencia' => $corespondencia
-            ]); */
     }
 
     /**
@@ -277,5 +268,12 @@ class CapturaCorrespondenciaController extends Controller
         
         //return redirect('correspondencia');
         return redirect('correspondencia')->with('Mensaje','Correspondencia eliminada');
+    }
+
+
+    public function buscador(Request $request){
+
+        $datos = capturaCorrespondencia::where("num_entrada","like", $request->textobuscador."%")->take(10)->get();
+        return view('correspondencia.index', compact("datos"));
     }
 }

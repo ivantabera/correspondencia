@@ -32,8 +32,11 @@ Route::get('/correspondencia/create', 'CapturaCorrespondenciaController@create')
 */
 
 /** Genera la rutas necesarias para acceder al controlador */
-/** le agregamos la funcion middleware para inpedir que el usuario pase si no esta logueado */
+/** le agregamos la funcion middleware para impedir que el usuario pase si no esta logueado */
 Route::resource('correspondencia', 'CapturaCorrespondenciaController')->middleware('auth');
+
+//Buscador en tiempo real
+Route::resource('correspondencia/buscador', 'CapturaCorrespondenciaController@buscador');
 
 Route::resource('promoremit', 'PromoremitController')->middleware('auth');
 
@@ -53,3 +56,7 @@ Auth::routes(['register'=>false, 'reset'=>false]);
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+//Ruta para las API
+Route::apiResource('pensamientos', 'PensamientoController');
