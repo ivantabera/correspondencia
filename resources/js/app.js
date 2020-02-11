@@ -19,6 +19,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+//componentes para pensamientos
 Vue.component('content-pensamiento-component', require('./components/ContentPensamientoComponent.vue').default);
 Vue.component('form-pensamiento-component', require('./components/FormPensamientoComponent.vue').default);
 Vue.component('pensamiento-component', require('./components/PensamientoComponent.vue').default);

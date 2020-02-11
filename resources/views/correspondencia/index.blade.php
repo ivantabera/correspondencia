@@ -10,25 +10,32 @@
     </div>
     @endif
 
-    <div class="col-lg-3">
-        <div class="input-group">
-        <input type="text" class="form-control" id="textobuscador" placeholder="Ingresa numero...">
-        <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Buscar</button>
-        </span>
-        </div><!-- /input-group -->
-    </div><!-- /.col-lg-6 -->
-
-    <div id="resultados">
-        @if(count($correspondencia))
-            @foreach ($correspondencia as $item)
-                <p class="p-2 border-bottom">{{$item->num_entrada.'-'.$item->referencia}}</p>
-            @endforeach
-        @endif
+    <a href="{{ url('correspondencia/create') }}" class="btn btn-success">Agregar Correspondencia</a>
+    <br>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1>
+                    Busqueda de correspondencia
+                    {!! Form::open([ 'method' => 'GET', 'class' => 'form-inline pull-rigth']) !!}
+                        <div class="form-group">
+                            {!! Form::text('num_entrada', null, ['class' => 'form-control', 'placeholder' => 'Numero de entrada']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!!Form::text('asunto', null, ['class' => 'form-control', 'placeholder' => 'Asunto']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!!Form::text('referencia', null, ['class' => 'form-control', 'placeholder' => 'Referencia']) !!}
+                        </div>
+                    {!! Form::close() !!}
+                </h1>
+            </div>
+        </div>
     </div>
 
-    <a href="{{ url('correspondencia/create') }}" class="btn btn-success">Agregar Correspondencia</a>
-    <br><br>
+    <br>
+
     <table class="table table-light table-hover table-responsive-sm table-responsive-md">
 
         <thead class="thead-light">
@@ -79,21 +86,8 @@
 
 </div>
 
-<script>
-    window.addEventListener("load", function(){
-        document.getElementById("textobuscador").addEventListener("keyup", function(){
-            fetch(`/correspondencia/buscador?textobuscador=${document.getElementById("textobuscador").value}`,{
-                method: 'get'
-            })
-            .then(response => response.text())
-            .then(html => {
-                console.log(html);
-                //document.getElementById("resultados")innerHtml += html
-                //pagina++;
-            })
-            .catch(error => console.log("error"))
-        })
-    })
+<script type="application/javascript">
+
 </script>
 
 @endsection

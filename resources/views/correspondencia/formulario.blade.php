@@ -5,7 +5,7 @@
         class="form-control {{ $errors->has('num_entrada') ? 'is-invalid' : ''  }}" 
         name="num_entrada" 
         id="num_entrada" 
-        value="{{ isset($correspondencia->num_entrada) ? $correspondencia->num_entrada : $consecutivo }}">
+        value="{{ isset($correspondencia->num_entrada) ? $correspondencia->num_entrada : $consecutivoNumEntrada }}">
     <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
     {!! $errors->first('num_entrada','<div class="invalid-feedback">:message</div>') !!}
 </div>

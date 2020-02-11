@@ -52,7 +52,7 @@ class CapturaCorrespondenciaController extends Controller
             'tipodocs' => $tipodocs,
             'dirigidos' => $dirigidos,
             'expedientes' => $expedientes,
-            'consecutivo' => $consecutivoNumEntrada
+            'consecutivoNumEntrada' => $consecutivoNumEntrada
         ]);
     }
 
@@ -271,9 +271,4 @@ class CapturaCorrespondenciaController extends Controller
     }
 
 
-    public function buscador(Request $request){
-
-        $datos = capturaCorrespondencia::where("num_entrada","like", $request->textobuscador."%")->take(10)->get();
-        return view('correspondencia.index', compact("datos"));
-    }
 }
