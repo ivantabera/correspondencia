@@ -34,6 +34,8 @@ Route::get('/correspondencia/create', 'CapturaCorrespondenciaController@create')
 /** Genera la rutas necesarias para acceder al controlador */
 /** le agregamos la funcion middleware para impedir que el usuario pase si no esta logueado */
 Route::resource('correspondencia', 'CapturaCorrespondenciaController')->middleware('auth');
+//Generar PDF
+Route::get('imprimir/{id}', 'CapturaCorrespondenciaController@exportpdf')->name('correspondencia.pdf');
 
 Route::resource('promoremit', 'PromoremitController')->middleware('auth');
 
@@ -57,3 +59,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Ruta para las API
 Route::apiResource('pensamientos', 'PensamientoController');
+

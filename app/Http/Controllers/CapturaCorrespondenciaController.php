@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\capturaCorrespondencia;
 use App\promoremit;
+use PDF;
+use Dompdf\Options;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -270,5 +272,18 @@ class CapturaCorrespondenciaController extends Controller
         return redirect('correspondencia')->with('Mensaje','Correspondencia eliminada');
     }
 
+    public function exportpdf($id){
+
+        $correspondencia = capturaCorrespondencia::findOrFail($id);
+
+        /* echo json_encode($correspondencia);exit;
+        return response()->json($correspondencia); */
+
+        $pdf = PDF::loadView('pdf.correspondencia', [
+            'correspondencia' => $correspondencia
+        ]);
+
+        return $pdf->download('correspondencia.pdf'); 
+    }
 
 }
