@@ -17,13 +17,13 @@
         <!--Formulario de busqueda-->
         {!! Form::open(['method' => 'GET', 'class' => 'form-inline pull-rigth']) !!}
             <div class="form-group">
-                {!! Form::text('num_entrada', null, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Numero de entrada']) !!}
+                <input type="text" name="num_entrada" class="form-control mr-sm-2" placeholder="Numero de entrada" value="{{ request('num_entrada')}}">
             </div>
             <div class="form-group">
-                {!!Form::text('asunto', null, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Asunto']) !!}
+                <input type="text" name="asunto" class="form-control mr-sm-2" placeholder="Asunto" value="{{ request('asunto')}}">
             </div>
             <div class="form-group">
-                {!!Form::text('referencia', null, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Referencia']) !!}
+                <input type="text" name="referencia" class="form-control mr-sm-2" placeholder="Referencia" value="{{ request('referencia')}}">
             </div>
             <div class="form-group">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>

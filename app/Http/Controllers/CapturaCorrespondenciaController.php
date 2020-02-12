@@ -18,10 +18,17 @@ class CapturaCorrespondenciaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-         $datos['correspondencia'] = capturaCorrespondencia::paginate(5);
+        $num_entrada = $request->get('num_entrada');
+        $asunto      = $request->get('asunto');
+        $referencia  = $request->get('referencia');
+
+        $datos['correspondencia'] = capturaCorrespondencia::orderBy('id')
+            ->nument($num_entrada)
+            ->asunto($asunto)
+            ->referencia($referencia)
+            ->paginate(5);
 
         //return response()->json($datos);
 
