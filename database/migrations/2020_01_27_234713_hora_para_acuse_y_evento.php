@@ -17,6 +17,7 @@ class HoraParaAcuseYEvento extends Migration
         Schema::table('captura_correspondencias', function (Blueprint $table) {
             $table->timestamp('hora_acuse')->useCurrent()->after('date_acuse');
             $table->timestamp('hora_evento')->useCurrent()->after('date_evento');
+            
         });
     }
 
