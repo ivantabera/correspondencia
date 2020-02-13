@@ -12,7 +12,9 @@
     
     <nav class="navbar navbar-light bg-light">
         <!--Boton agregar correspondencia-->
+        @can('correspondencia.create')
         <a href="{{ url('correspondencia/create') }}" class="btn btn-success">Agregar Correspondencia</a>
+        @endcan()
 
         <!--Formulario de busqueda-->
         {!! Form::open(['method' => 'GET', 'class' => 'form-inline pull-rigth']) !!}
@@ -64,9 +66,12 @@
                         <img src="{{ asset('storage').'/'.$correspon->foto}}" class="img-thumbnail img-fluid" alt="" width="50">
                     </td>
                     <td>
+                        @can('correspondencia.edit')
                         <a href="{{ url('/correspondencia/'.$correspon->id.'/edit') }}" class="btn btn-warning">
                             Editar
                         </a>
+                        @endcan()
+                        
                         <form method="post" action="{{ url('/correspondencia/'.$correspon->id) }}" style="display:inline">
                             {{ csrf_field() }} <!--token para que nos permita acceder-->
                             {{ method_field('DELETE') }} <!--metodo que vamos a ejecutar-->

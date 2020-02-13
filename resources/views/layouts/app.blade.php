@@ -32,41 +32,70 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+
+                    @can('correspondencia.index')
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                                 <a class="nav-link" href="{{ route('correspondencia.index') }}">{{ __('Correspondencia') }}</a>
                             </li>
                     </ul>
+                    @endcan()
 
+                    @can('promoremit.index')
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                                 <a class="nav-link" href="{{ route('promoremit.index') }}">{{ __('Promotor/Remitente') }}</a>
                             </li>
                     </ul>
+                    @endcan()
 
+                    @can('destinatario.index')
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                                 <a class="nav-link" href="{{ route('destinatario.index') }}">{{ __('Destinatario') }}</a>
                             </li>
                     </ul>
+                    @endcan()
 
+                    @can('expedientes.index')
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                                 <a class="nav-link" href="{{ route('expedientes.index') }}">{{ __('Expedientes') }}</a>
                             </li>
                     </ul>
+                    @endcan()
 
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                                <a class="nav-link" href="{{ route('tipodocumento.index') }}">{{ __('Tipo de Documento') }}</a>
-                            </li>
-                    </ul>
-
+                    @can('dirigido.index')
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                                 <a class="nav-link" href="{{ route('dirigido.index') }}">{{ __('Dirigido') }}</a>
                             </li>
                     </ul>
+                    @endcan()
+
+                    @can('tipodocumento.index')
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('tipodocumento.index') }}">{{ __('Tipo de Documento') }}</a>
+                            </li>
+                    </ul>
+                    @endcan()
+
+                    @can('users.index')
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
+                            </li>
+                    </ul>
+                    @endcan()
+
+                    @can('roles.index')
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('roles.index') }}">{{ __('Roles') }}</a>
+                            </li>
+                    </ul>
+                    @endcan()
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">

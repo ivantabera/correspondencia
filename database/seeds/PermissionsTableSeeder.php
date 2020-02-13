@@ -69,10 +69,5 @@ class PermissionsTableSeeder extends Seeder
             'slug'          => 'roles.destroy',
             'description'   => 'Elimina cualquier rol del sistema',
         ]);
-
-
-        $this->call([
-            Permission::class,
-        ]);
     }
 }
