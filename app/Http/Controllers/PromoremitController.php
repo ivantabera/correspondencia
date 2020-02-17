@@ -70,6 +70,9 @@ class PromoremitController extends Controller
             $datosPromoRemit['Foto']=$request->file('Foto')->store('uploads','public');
         }*/
 
+        $datosPromoRemit['created_at'] = \Carbon\Carbon::now();
+        $datosPromoRemit['updated_at'] = \Carbon\Carbon::now();
+
         promoremit::insert($datosPromoRemit);
 
         //return response()->json($datosPromoRemit);

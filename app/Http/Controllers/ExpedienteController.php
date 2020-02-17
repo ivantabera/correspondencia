@@ -63,6 +63,9 @@ class ExpedienteController extends Controller
             $datosExpediente['Foto']=$request->file('Foto')->store('uploads','public');
         }*/
 
+        $datosExpediente['created_at'] = \Carbon\Carbon::now();
+        $datosExpediente['updated_at'] = \Carbon\Carbon::now();
+
         expediente::insert($datosExpediente);
 
         //return response()->json($datosExpediente);

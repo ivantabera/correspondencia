@@ -59,6 +59,9 @@ class DirigidoController extends Controller
         /** Al recabar la informacion evitar que el campo token se inserte en la BD */
         $datosDirigido = request()->except('_token');
 
+        $datosDirigido['created_at'] = \Carbon\Carbon::now();
+        $datosDirigido['updated_at'] = \Carbon\Carbon::now();
+
         dirigido::insert($datosDirigido);
 
         //return response()->json($datosDestinatario);

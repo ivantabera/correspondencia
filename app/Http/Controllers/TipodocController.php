@@ -55,6 +55,9 @@ class TipodocController extends Controller
         /** Al recabar la informacion evitar que el campo token se inserte en la BD */
         $datosTipoDocumento = request()->except('_token');
 
+        $datosTipoDocumento['created_at'] = \Carbon\Carbon::now();
+        $datosTipoDocumento['updated_at'] = \Carbon\Carbon::now();
+
         tipodoc::insert($datosTipoDocumento);
 
         //return response()->json($datosPromoRemit);

@@ -5,7 +5,7 @@
         class="form-control {{ $errors->has('num_entrada') ? 'is-invalid' : ''  }}" 
         name="num_entrada" 
         id="num_entrada" 
-        value="{{ isset($correspondencia->num_entrada) ? $correspondencia->num_entrada : $consecutivoNumEntrada }}">
+        value="{{ isset($correspondencia->num_entrada) ? $correspondencia->num_entrada : $num_entrada }}">
     <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
     {!! $errors->first('num_entrada','<div class="invalid-feedback">:message</div>') !!}
 </div>
@@ -321,6 +321,7 @@
 </div>
 
 <input type="submit" class="btn btn-success" value="{{$Modo == 'crear' ? 'Agregar' : 'Modificar'}}">
+
 <a href="{{ url('correspondencia') }}" class="btn btn-primary">Regresar</a>
 
  

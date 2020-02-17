@@ -38,14 +38,12 @@ modificar la ruta para evitar el registro y el reset del password
 Auth::routes(['register'=>false, 'reset'=>false]);
 */
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-
 //Ruta para las API
 Route::apiResource('pensamientos', 'PensamientoController');
 
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
 
 Route::middleware(['auth'])->group(function(){
 
@@ -61,16 +59,16 @@ Route::middleware(['auth'])->group(function(){
     Route::get('correspondencia/create', 'CapturaCorrespondenciaController@create')->name('correspondencia.create')
             ->middleware('can:correspondencia.create');
 
-    Route::put('correspondencia/{role}', 'CapturaCorrespondenciaController@update')->name('correspondencia.update')
+    Route::put('correspondencia/{id}', 'CapturaCorrespondenciaController@update')->name('correspondencia.update')
             ->middleware('can:correspondencia.edit');
 
-    Route::get('correspondencia/{role}', 'CapturaCorrespondenciaController@show')->name('correspondencia.show')
+    Route::get('correspondencia/{id}', 'CapturaCorrespondenciaController@show')->name('correspondencia.show')
             ->middleware('can:correspondencia.show');
 
-    Route::delete('correspondencia/{role}', 'CapturaCorrespondenciaController@destroy')->name('correspondencia.destroy')
+    Route::delete('correspondencia/{id}', 'CapturaCorrespondenciaController@destroy')->name('correspondencia.destroy')
             ->middleware('can:correspondencia.destroy');
 
-    Route::get('correspondencia/{role}/edit', 'CapturaCorrespondenciaController@edit')->name('correspondencia.edit')
+    Route::get('correspondencia/{id}/edit', 'CapturaCorrespondenciaController@edit')->name('correspondencia.edit')
             ->middleware('can:correspondencia.edit');
 
     //Generar PDF
@@ -88,16 +86,16 @@ Route::middleware(['auth'])->group(function(){
     Route::get('promoremit/create', 'PromoremitController@create')->name('promoremit.create')
             ->middleware('can:promoremit.create');
 
-    Route::put('promoremit/{role}', 'PromoremitController@update')->name('promoremit.update')
+    Route::put('promoremit/{id}', 'PromoremitController@update')->name('promoremit.update')
             ->middleware('can:promoremit.edit');
 
-    Route::get('promoremit/{role}', 'PromoremitController@show')->name('promoremit.show')
+    Route::get('promoremit/{id}', 'PromoremitController@show')->name('promoremit.show')
             ->middleware('can:promoremit.show');
 
-    Route::delete('promoremit/{role}', 'PromoremitController@destroy')->name('promoremit.destroy')
+    Route::delete('promoremit/{id}', 'PromoremitController@destroy')->name('promoremit.destroy')
             ->middleware('can:promoremit.destroy');
 
-    Route::get('promoremit/{role}/edit', 'PromoremitController@edit')->name('promoremit.edit')
+    Route::get('promoremit/{id}/edit', 'PromoremitController@edit')->name('promoremit.edit')
             ->middleware('can:promoremit.edit');
 
 
@@ -111,16 +109,16 @@ Route::middleware(['auth'])->group(function(){
     Route::get('destinatario/create', 'DestinatarioController@create')->name('destinatario.create')
             ->middleware('can:destinatario.create');
 
-    Route::put('destinatario/{role}', 'DestinatarioController@update')->name('destinatario.update')
+    Route::put('destinatario/{id}', 'DestinatarioController@update')->name('destinatario.update')
             ->middleware('can:destinatario.edit');
 
-    Route::get('destinatario/{role}', 'DestinatarioController@show')->name('destinatario.show')
+    Route::get('destinatario/{id}', 'DestinatarioController@show')->name('destinatario.show')
             ->middleware('can:destinatario.show');
 
-    Route::delete('destinatario/{role}', 'DestinatarioController@destroy')->name('destinatario.destroy')
+    Route::delete('destinatario/{id}', 'DestinatarioController@destroy')->name('destinatario.destroy')
             ->middleware('can:destinatario.destroy');
 
-    Route::get('destinatario/{role}/edit', 'DestinatarioController@edit')->name('destinatario.edit')
+    Route::get('destinatario/{id}/edit', 'DestinatarioController@edit')->name('destinatario.edit')
             ->middleware('can:destinatario.edit');
 
 
@@ -134,16 +132,16 @@ Route::middleware(['auth'])->group(function(){
     Route::get('expedientes/create', 'ExpedienteController@create')->name('expedientes.create')
             ->middleware('can:expedientes.create');
 
-    Route::put('expedientes/{role}', 'ExpedienteController@update')->name('expedientes.update')
+    Route::put('expedientes/{id}', 'ExpedienteController@update')->name('expedientes.update')
             ->middleware('can:expedientes.edit');
 
-    Route::get('expedientes/{role}', 'ExpedienteController@show')->name('expedientes.show')
+    Route::get('expedientes/{id}', 'ExpedienteController@show')->name('expedientes.show')
             ->middleware('can:expedientes.show');
 
-    Route::delete('expedientes/{role}', 'ExpedienteController@destroy')->name('expedientes.destroy')
+    Route::delete('expedientes/{id}', 'ExpedienteController@destroy')->name('expedientes.destroy')
             ->middleware('can:expedientes.destroy');
 
-    Route::get('expedientes/{role}/edit', 'ExpedienteController@edit')->name('expedientes.edit')
+    Route::get('expedientes/{id}/edit', 'ExpedienteController@edit')->name('expedientes.edit')
             ->middleware('can:expedientes.edit');
 
 
@@ -157,16 +155,16 @@ Route::middleware(['auth'])->group(function(){
     Route::get('dirigido/create', 'DirigidoController@create')->name('dirigido.create')
             ->middleware('can:dirigido.create');
 
-    Route::put('dirigido/{role}', 'DirigidoController@update')->name('dirigido.update')
+    Route::put('dirigido/{id}', 'DirigidoController@update')->name('dirigido.update')
             ->middleware('can:dirigido.edit');
 
-    Route::get('dirigido/{role}', 'DirigidoController@show')->name('dirigido.show')
+    Route::get('dirigido/{id}', 'DirigidoController@show')->name('dirigido.show')
             ->middleware('can:dirigido.show');
 
-    Route::delete('dirigido/{role}', 'DirigidoController@destroy')->name('dirigido.destroy')
+    Route::delete('dirigido/{id}', 'DirigidoController@destroy')->name('dirigido.destroy')
             ->middleware('can:dirigido.destroy');
 
-    Route::get('dirigido/{role}/edit', 'DirigidoController@edit')->name('dirigido.edit')
+    Route::get('dirigido/{id}/edit', 'DirigidoController@edit')->name('dirigido.edit')
             ->middleware('can:dirigido.edit');
 
 
@@ -180,32 +178,32 @@ Route::middleware(['auth'])->group(function(){
     Route::get('tipodocumento/create', 'TipodocController@create')->name('tipodocumento.create')
             ->middleware('can:tipodocumento.create');
 
-    Route::put('tipodocumento/{role}', 'TipodocController@update')->name('tipodocumento.update')
+    Route::put('tipodocumento/{id}', 'TipodocController@update')->name('tipodocumento.update')
             ->middleware('can:tipodocumento.edit');
 
-    Route::get('tipodocumento/{role}', 'TipodocController@show')->name('tipodocumento.show')
+    Route::get('tipodocumento/{id}', 'TipodocController@show')->name('tipodocumento.show')
             ->middleware('can:tipodocumento.show');
 
-    Route::delete('tipodocumento/{role}', 'TipodocController@destroy')->name('tipodocumento.destroy')
+    Route::delete('tipodocumento/{id}', 'TipodocController@destroy')->name('tipodocumento.destroy')
             ->middleware('can:tipodocumento.destroy');
 
-    Route::get('tipodocumento/{role}/edit', 'TipodocController@edit')->name('tipodocumento.edit')
+    Route::get('tipodocumento/{id}/edit', 'TipodocController@edit')->name('tipodocumento.edit')
             ->middleware('can:tipodocumento.edit');
 
     //usuarios
     Route::get('users', 'UserController@index')->name('users.index')
             ->middleware('can:users.index');
 
-    Route::put('users/{role}', 'UserController@update')->name('users.update')
+    Route::put('users/{id}', 'UserController@update')->name('users.update')
             ->middleware('can:users.edit');
 
-    Route::get('users/{role}', 'UserController@show')->name('users.show')
+    Route::get('users/{id}', 'UserController@show')->name('users.show')
             ->middleware('can:users.show');
 
-    Route::delete('users/{role}', 'UserController@destroy')->name('users.destroy')
+    Route::delete('users/{id}', 'UserController@destroy')->name('users.destroy')
             ->middleware('can:users.destroy');
 
-    Route::get('users/{role}/edit', 'UserController@edit')->name('users.edit')
+    Route::get('users/{id}/edit', 'UserController@edit')->name('users.edit')
             ->middleware('can:users.edit');
 
     //Roles
@@ -218,16 +216,16 @@ Route::middleware(['auth'])->group(function(){
     Route::get('roles/create', 'RoleController@create')->name('roles.create')
         ->middleware('can:roles.create');
 
-    Route::put('roles/{role}', 'RoleController@update')->name('roles.update')
+    Route::put('roles/{id}', 'RoleController@update')->name('roles.update')
         ->middleware('can:roles.edit');
 
-    Route::get('roles/{role}', 'RoleController@show')->name('roles.show')
+    Route::get('roles/{id}', 'RoleController@show')->name('roles.show')
         ->middleware('can:roles.show');
 
-    Route::delete('roles/{role}', 'RoleController@destroy')->name('roles.destroy')
+    Route::delete('roles/{id}', 'RoleController@destroy')->name('roles.destroy')
         ->middleware('can:roles.destroy');
 
-    Route::get('roles/{role}/edit', 'RoleController@edit')->name('roles.edit')
+    Route::get('roles/{id}/edit', 'RoleController@edit')->name('roles.edit')
         ->middleware('can:roles.edit');
 
 });

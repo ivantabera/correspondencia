@@ -30,15 +30,19 @@
                     <td>{{$dirigi->nombre}}</td>
                     <td>{{$dirigi->cargo}}</td>
                     <td>
+                        @can('dirigido.edit ')
                         <a href="{{ url('/dirigido/'.$dirigi->id.'/edit') }}" class="btn btn-warning">
                             Editar
                         </a>
+                        @endcan
+
+                        @can('dirigido.destroy')
                         <form method="post" action="{{ url('/dirigido/'.$dirigi->id) }}" style="display:inline">
                             {{ csrf_field() }} <!--token para que nos permita acceder-->
                             {{ method_field('DELETE') }} <!--metodo que vamos a ejecutar-->
                             <button type="submit" onclick="return confirm('¿Borrar?')" class="btn btn-danger">Borrar</button>
-
                         </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

@@ -16,7 +16,7 @@
     </div>
     @endif
 
-    <form action="{{ url('/tipodocumento') }}" class="form-horizontal" method="POST" enctype="multipart/form-data">
+    <form action="{{ url('/tipodocumento/store') }}" class="form-horizontal" method="POST" enctype="multipart/form-data">
         
         <!--imprime una llave "token" de acceso para que nos deje entrar a la funcion -->
         {{ csrf_field() }}

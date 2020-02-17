@@ -61,7 +61,7 @@ class CapturaCorrespondenciaController extends Controller
             'tipodocs' => $tipodocs,
             'dirigidos' => $dirigidos,
             'expedientes' => $expedientes,
-            'consecutivoNumEntrada' => $consecutivoNumEntrada
+            'num_entrada' => $consecutivoNumEntrada
         ]);
     }
 
@@ -113,6 +113,9 @@ class CapturaCorrespondenciaController extends Controller
             $datosCorrespondencia['foto']=$request->file('foto')->store('uploads','public');
         }
 
+        $datosCorrespondencia['created_at'] = \Carbon\Carbon::now();
+        $datosCorrespondencia['updated_at'] = \Carbon\Carbon::now();
+
         //echo json_encode($datosCorrespondencia); exit;
 
         capturaCorrespondencia::insert($datosCorrespondencia);
@@ -132,7 +135,8 @@ class CapturaCorrespondenciaController extends Controller
     public function show(capturaCorrespondencia $capturaCorrespondencia)
     {
         //
-        return view('correspondencia.formulario');
+        dd($capturaCorrespondencia->id);
+        return view('correspondencia.formulario', compact('capturaCorrespondencia'));
     }
 
     /**

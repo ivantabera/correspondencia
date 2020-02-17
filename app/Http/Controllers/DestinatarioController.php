@@ -62,6 +62,8 @@ class DestinatarioController extends Controller
         if( $request->hasFile('Foto') ){
             $datosDestinatario['Foto']=$request->file('Foto')->store('uploads','public');
         }*/
+        $datosDestinatario['created_at'] = \Carbon\Carbon::now();
+        $datosDestinatario['updated_at'] = \Carbon\Carbon::now();
 
         destinatario::insert($datosDestinatario);
 
