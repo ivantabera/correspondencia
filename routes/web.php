@@ -195,7 +195,7 @@ Route::middleware(['auth'])->group(function(){
             ->middleware('can:users.index');
 
     Route::put('users/{id}', 'UserController@update')->name('users.update')
-            ->middleware('can:users.edit');
+            ->middleware('can:users.update');
 
     Route::get('users/{id}', 'UserController@show')->name('users.show')
             ->middleware('can:users.show');
