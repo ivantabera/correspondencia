@@ -31,6 +31,5 @@
         @endforeach
     </ul>
 </div>
-
 <input type="submit" class="btn btn-success" value="{{$Modo == 'crear' ? 'Agregar' : 'Guardar'}}">
 <a href="{{ url('users') }}" class="btn btn-primary">Regresar</a>

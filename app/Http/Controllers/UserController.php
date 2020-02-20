@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Caffeinated\Shinobi\Models\Permission;
 use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -99,12 +100,13 @@ class UserController extends Controller
     public function edit($id)
     {
         //
-        $roles = Role::get();
         $user = User::findOrFail($id);
+        $roles = Role::get();
+        $permisos = Permission::get();
 
         //return response()->json($user);
         // compact() crea un conjunto de informacino a traves de una variable
-        return view('user.editar', compact('user','roles'));
+        return view('user.editar', compact('user','roles','permisos'));
     }
 
     /**
@@ -116,17 +118,16 @@ class UserController extends Controller
      */
     public function update(Request $request,User $user, $id)
     {
-        //return response()->json($id);
-        //Actualizamos el rol 
-
         //Actualizamos el usuario sin el token ni el metodo
         $datosUsuario = request()->except(['_token','_method', 'roles']);
+        
+        //Actualizamos el usuario
         User::where('id', "=", $id)->update($datosUsuario);
 
         $user = User::findOrFail($id);
-
         $user->roles()->sync($request->get('roles'));
         
+        //return response()->json($respuesta);
 
         return redirect('users')->with('Mensaje','Usuario actualizado con éxito');
     }
