@@ -68,12 +68,21 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        {{-- <a href="{{ url('/home') }}">Home</a> --}}
+
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                            {{ __('Cerrar Sesión') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">Iniciar Sesión</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">Registrate</a>
                         @endif
                     @endauth
                 </div>
@@ -81,18 +90,34 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Correspondencia
+                    Correspondencia STC
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    @can('correspondencia.index')
+                        <a href="{{ url('correspondencia') }}">Correspondencia</a>
+                    @endcan
+                    @can('promoremit.index')
+                        <a href="{{ url('promoremit') }}">Promotores y remitentes</a>
+                    @endcan
+                    @can('destinatario.index')
+                        <a href="{{ url('destinatario') }}">Destinatarios</a>
+                    @endcan
+                    @can('expedientes.index')
+                        <a href="{{ url('expedientes') }}">Expedientes</a>
+                    @endcan
+                    @can('dirigido.index')
+                        <a href="{{ url('dirigido') }}">Dirigido</a>
+                    @endcan
+                    @can('tipodocumento.index')
+                        <a href="{{ url('tipodocumento') }}">Tipos de documento</a>
+                    @endcan
+                    @can('users.index')
+                        <a href="{{ url('users') }}">Usuarios</a>
+                    @endcan
+                    @can('roles.index')
+                        <a href="{{ url('roles') }}">Roles</a>
+                    @endcan
                 </div>
             </div>
         </div>
