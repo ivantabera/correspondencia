@@ -41,9 +41,10 @@ Auth::routes(['register'=>false, 'reset'=>false]);
 //Ruta para las API
 Route::apiResource('pensamientos', 'PensamientoController');
 
+Auth::routes();
+
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
 
 Route::middleware(['auth'])->group(function(){
 

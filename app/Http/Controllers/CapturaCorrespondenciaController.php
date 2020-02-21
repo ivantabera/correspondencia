@@ -248,7 +248,6 @@ class CapturaCorrespondenciaController extends Controller
             
             $correspondencia = capturaCorrespondencia::findOrFail($id);
             $borrar=Storage::delete('public/'. $correspondencia->foto);
-            //var_dump($borrar);
             $datosCorrespondencia['foto']=$request->file('foto')->store('uploads','public');
         }
 
