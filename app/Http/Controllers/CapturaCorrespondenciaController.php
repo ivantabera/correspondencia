@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CapturaCorrespondenciaController extends Controller
 {
@@ -31,7 +32,7 @@ class CapturaCorrespondenciaController extends Controller
             ->paginate(5);
 
         //return response()->json($datos);
-
+        //Alert::success('Success Title', 'Success Message');
         return view('correspondencia.index', $datos);
     }
 

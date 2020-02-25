@@ -49874,6 +49874,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  */
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+//componentes para pensamientos
 
 Vue.component('content-pensamiento-component', __webpack_require__(/*! ./components/ContentPensamientoComponent.vue */ "./resources/js/components/ContentPensamientoComponent.vue")["default"]);
 Vue.component('form-pensamiento-component', __webpack_require__(/*! ./components/FormPensamientoComponent.vue */ "./resources/js/components/FormPensamientoComponent.vue")["default"]);

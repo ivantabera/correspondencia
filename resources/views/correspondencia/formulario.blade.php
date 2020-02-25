@@ -323,8 +323,3 @@
 <input type="submit" class="btn btn-success" value="{{$Modo == 'crear' ? 'Agregar' : 'Modificar'}}">
 
 <a href="{{ url('correspondencia') }}" class="btn btn-primary">Regresar</a>
-
- 
-<!-- <script type="text/javascript" defer>
-    $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
-</script>      -->       
