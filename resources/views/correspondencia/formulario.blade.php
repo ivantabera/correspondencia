@@ -146,7 +146,7 @@
     <label class="control-label" for="firmado_por">{{'Firmado por'}}</label>
     <input 
         type="text" 
-        class="form-control {{ $errors->has('firmado_por') ? 'is-invalid' : ''  }}" 
+        class="form-control {{ $errors->has('firmado_por') ? 'is-invalid' : ''  }} firmado_por" 
         name="firmado_por" 
         id="firmado_por" 
         value="{{ isset($correspondencia->firmado_por) ? $correspondencia->firmado_por : old('firmado_por') }}">
@@ -158,7 +158,7 @@
     <label class="control-label" for="cargo">{{'Cargo'}}</label>
     <input 
         type="text" 
-        class="form-control {{ $errors->has('cargo') ? 'is-invalid' : ''  }}" 
+        class="form-control {{ $errors->has('cargo') ? 'is-invalid' : ''  }} cargo" 
         name="cargo" 
         id="cargo" 
         value="{{ isset($correspondencia->cargo) ? $correspondencia->cargo : old('cargo') }}">

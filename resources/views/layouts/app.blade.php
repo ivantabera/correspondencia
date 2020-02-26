@@ -145,6 +145,7 @@
 </body>
 
 <script src="{{ asset('js/autoCompleCorres.js') }}"></script>
+<script src="{{ asset('js/borrar.js') }}"></script>
 
 @yield('script')
 

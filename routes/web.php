@@ -98,6 +98,8 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('promoremit/{id}/edit', 'PromoremitController@edit')->name('promoremit.edit')
             ->middleware('can:promoremit.edit');
+    //Peticion ajax para autorrelleno de formulario correspondencia
+    Route::post('promoremit/{id}','PromoremitController@getajax')->name('promoremit.getajax');
 
 
     //Destinatario

@@ -73,10 +73,10 @@
                         @endcan()
 
                         @can('correspondencia.destroy')
-                        <form method="post" action="{{ url('/correspondencia/'.$correspon->id) }}" style="display:inline">
+                        <form method="post" action="{{ url('/correspondencia/'.$correspon->id) }}" class="formBorrar" style="display:inline">
                             {{ csrf_field() }} <!--token para que nos permita acceder-->
                             {{ method_field('DELETE') }} <!--metodo que vamos a ejecutar-->
-                            <button type="submit" onclick="return confirm('¿Borrar?')" class="btn btn-danger">Borrar</button>
+                            <button type="submit"  class="btn btn-danger borrar">Borrar</button>
                         </form>
                         @endcan()
                         {{-- <form method="get" action="{{ url('/imprimir/'.$correspon->id) }}" style="display:inline">
@@ -84,7 +84,7 @@
                             <button type="submit" onclick="return confirm('¿Obtener PDF?')" class="btn btn-primary">PDF</button>
                         </form> --}}
                         @can('correspondencia.pdf')
-                        <a href="{{ url('/imprimir/'.$correspon->id) }}" class="btn btn-primary" target="_blank">
+                        <a href="{{ url('/imprimir/'.$correspon->id) }}" class="btn btn-primary pdf" target="_blank">
                             PDF
                         </a>
                         @endcan()

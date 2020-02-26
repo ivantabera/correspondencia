@@ -182,4 +182,27 @@ class PromoremitController extends Controller
         //return redirect('promoRemit');
         return redirect('promoremit')->with('Mensaje','Promotor / Remitente eliminado/a con éxito');
     }
+
+    /**
+     * Peticion para traer los elementos de un promotor o remitente y rellenar el fomrulario de correspondencia
+     *
+     */
+    public function getajax($id)
+    {
+        //
+        $resp = array('s' => 0, 'm' => ''); 
+
+        $promoremit = promoremit::find($id);
+
+        if($promoremit){
+            $resp['s'] = 1;
+			$resp['m'] = 'success';
+			$resp['promotordata'] = $promoremit;
+        }else{
+            $resp['s'] = 0;
+			$resp['m'] = 'error, no hay registro';
+        }
+
+        return response()->json($resp);
+    }
 }
