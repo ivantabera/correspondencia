@@ -16,11 +16,12 @@ $(document).ready(function(){
            data:{id:promotor},
            success:function(data){
                if(data != ''){
-                console.log("data",data);
                 if(data.s == 1){
                     $(".firmado_por").val(data.promotordata.encargado);
                     $(".cargo").val(data.promotordata.cargo);
                 } 
+               } else {
+                   console.log("no hay respuesta");
                }
               
            }

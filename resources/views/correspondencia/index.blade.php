@@ -71,18 +71,40 @@
                             Editar
                         </a>
                         @endcan()
-
+                        
+                        {{-- Formulario que cambia de status --}}
+                        @can('correspondencia.status')
+                        <form method="post" action="{{ url('/correspondencia/status/'.$correspon->id) }}" class="formStatus" style="display:inline">
+                            {{ csrf_field() }} <!--token para que nos permita acceder-->
+                            {{ method_field('PUT') }} <!--metodo que vamos a ejecutar-->
+                            <button 
+                                type="submit" 
+                                onclick="event.preventDefault();
+                                    Swal.fire({
+                                    title: '¿Deseas borrar este registro de correspondencia?',
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Aceptar',
+                                    cancelButtonText: 'Cancelar'
+                                    }).then((result) => {
+                                    if (result.value) {
+                                        submit();
+                                    } 
+                                    }); " 
+                                class="btn btn-danger changestatus" >
+                                Borrar
+                            </button>
+                        </form>
+                        @endcan()
+                        {{-- PARTE DEL FORMULARIO QUE ELIMINA
                         @can('correspondencia.destroy')
                         <form method="post" action="{{ url('/correspondencia/'.$correspon->id) }}" class="formBorrar" style="display:inline">
                             {{ csrf_field() }} <!--token para que nos permita acceder-->
                             {{ method_field('DELETE') }} <!--metodo que vamos a ejecutar-->
                             <button type="submit"  class="btn btn-danger borrar">Borrar</button>
                         </form>
-                        @endcan()
-                        {{-- <form method="get" action="{{ url('/imprimir/'.$correspon->id) }}" style="display:inline">
-                            {{ csrf_field() }} <!--token para que nos permita acceder-->
-                            <button type="submit" onclick="return confirm('¿Obtener PDF?')" class="btn btn-primary">PDF</button>
-                        </form> --}}
+                        @endcan() 
+                        --}}
                         @can('correspondencia.pdf')
                         <a href="{{ url('/imprimir/'.$correspon->id) }}" class="btn btn-primary pdf" target="_blank">
                             PDF
@@ -98,9 +120,5 @@
     {{ $correspondencia->links() }}
 
 </div>
-
-<script type="application/javascript">
-
-</script>
 
 @endsection

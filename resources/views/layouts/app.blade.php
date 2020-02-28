@@ -13,6 +13,8 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
+
+    <script src="{{ asset('js/autoCompleCorres.js') }}"></script>
     @yield('script')
 
     <!-- Fonts -->
@@ -24,6 +26,8 @@
 
 </head>
 <body>
+
+    @include('sweetalert::alert')
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -141,13 +145,7 @@
             @yield('content')
         </main>
     </div>
-    @include('sweetalert::alert')
 </body>
-
-<script src="{{ asset('js/autoCompleCorres.js') }}"></script>
-<script src="{{ asset('js/borrar.js') }}"></script>
-
-@yield('script')
 
 
 </html>

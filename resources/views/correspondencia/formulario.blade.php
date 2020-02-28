@@ -1,7 +1,7 @@
 <div class="form-group">
     {{-- <label class="control-label" for="num_entrada">{{'Numero de entrada'}}</label> --}}
     <input 
-        type="texts" 
+        type="hidden" 
         class="form-control {{ $errors->has('num_entrada') ? 'is-invalid' : ''  }}" 
         name="num_entrada" 
         id="num_entrada" 

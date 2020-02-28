@@ -25,7 +25,7 @@ class CapturaCorrespondenciaController extends Controller
         $asunto      = $request->get('asunto');
         $referencia  = $request->get('referencia');
 
-        $datos['correspondencia'] = capturaCorrespondencia::orderBy('id')
+        $datos['correspondencia'] = capturaCorrespondencia::orderBy('id')->where('status', '=', '1')
             ->nument($num_entrada)
             ->asunto($asunto)
             ->referencia($referencia)
@@ -295,6 +295,22 @@ class CapturaCorrespondenciaController extends Controller
         ]);
 
         return $pdf->download('correspondencia.pdf'); 
+    }
+
+    public function status($id)
+    {
+        //
+        //echo json_encode($id);exit;
+        $correspondencia = capturaCorrespondencia::findOrFail($id);
+        
+        
+        $correspondencia->status = 0;
+        $correspondencia->save();
+
+        $result = capturaCorrespondencia::findOrFail($id);
+        
+        //return redirect('correspondencia');
+        return redirect('correspondencia')->with('Mensaje','Correspondencia eliminada');
     }
 
 }

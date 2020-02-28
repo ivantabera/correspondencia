@@ -74,7 +74,10 @@ Route::middleware(['auth'])->group(function(){
 
     //Generar PDF
     Route::get('imprimir/{id}', 'CapturaCorrespondenciaController@exportpdf')->name('correspondencia.pdf')
-            ->middleware('can:correspondencia.pdf');;
+            ->middleware('can:correspondencia.pdf');
+
+    Route::put('correspondencia/status/{id}', 'CapturaCorrespondenciaController@status')->name('correspondencia.status')
+            ->middleware('can:correspondencia.status');
     
     
     //Promotores y remitentes
