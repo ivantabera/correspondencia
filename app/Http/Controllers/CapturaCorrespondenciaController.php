@@ -108,6 +108,8 @@ class CapturaCorrespondenciaController extends Controller
 
         /** Al recabar la informacion evitar que el campo token se inserte en la BD */
         $datosCorrespondencia = request()->except('_token');
+
+        $datosCorrespondencia['user_id'] = auth()->id();
        
         /** Recoleccion de la foto */
         if( $request->hasFile('foto') ){
