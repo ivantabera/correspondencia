@@ -6,10 +6,9 @@ $(document).ready(function(){
         }
     });
    
-    $("#promotor").change(function(){
+    $("#promoremit_id").change(function(){
    
-        var promotor=$("#promotor").val();
-   
+        var promotor=$("#promoremit_id").val();
         $.ajax({
            type:'POST',
            url:"/promoremit/"+promotor,

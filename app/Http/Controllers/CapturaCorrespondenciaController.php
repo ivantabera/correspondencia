@@ -80,22 +80,22 @@ class CapturaCorrespondenciaController extends Controller
             'date_acuse' => 'required|string|max:150',
             'hora_acuse' => 'required|string|max:150',
             'date_elaboracion' => 'required|string|max:150',
-            'referencia' => 'required|string|max:150',
-            'promotor' => 'required|string|max:150',
-            'remitente' => 'required|string|max:150',
-            'dirigido' => 'required|string|max:150',
+            /* 'referencia' => 'required|string|max:150', */
+            'promoremit_id' => 'required|string|max:150',
+            /* 'remitente' => 'required|string|max:150', */
+            'dirigido_id' => 'required|string|max:150',/* 
             'antecedente' => 'required|string|max:150',
-            'particular' => 'required|string|max:150',
+            'particular' => 'required|string|max:150', */
             'firmado_por' => 'required|string|max:150',
             'cargo' => 'required|string|max:150',
-            'tipo' => 'required|string|max:150',
-            'expediente' => 'required|string|max:150',
+            'tipo_id' => 'required|string|max:150',
+            'expediente_id' => 'required|string|max:150',
             'clasificacion' => 'required|string|max:150',
-            'asunto' => 'required|string|max:150',
+            'asunto' => 'required|string|max:150'/* ,
             'evento' => 'required|string|max:150',
             'date_evento' => 'required|string|max:150',
             'hora_evento' => 'required|string|max:150',
-            'foto' => 'required|max:10000|mimes:jpeg,png,jpg'
+            'foto' => 'required|max:10000|mimes:jpeg,png,jpg' */
         ];
 
         //enviar el mensaje con el atributo si esta erroneo
@@ -158,31 +158,31 @@ class CapturaCorrespondenciaController extends Controller
         $expedientes = DB::table('expedientes')->get();
 
         $promotor = DB::table('captura_correspondencias')
-            ->join('promoremits', 'captura_correspondencias.promotor', '=', 'promoremits.id')
+            ->join('promoremits', 'captura_correspondencias.promoremit_id', '=', 'promoremits.id')
             ->select('promoremits.id', 'promoremits.nombre')
             ->where('captura_correspondencias.id', '=', $correspondencia->id)
             ->get();
 
         $remitente = DB::table('captura_correspondencias')
-            ->join('promoremits', 'captura_correspondencias.remitente', '=', 'promoremits.id')
+            ->join('promoremits', 'captura_correspondencias.remitente_id', '=', 'promoremits.id')
             ->select('promoremits.id', 'promoremits.nombre')
             ->where('captura_correspondencias.id', '=', $correspondencia->id)
             ->get();
         
         $tipodoc = DB::table('captura_correspondencias')
-            ->join('tipodocs', 'captura_correspondencias.tipo', '=', 'tipodocs.id')
+            ->join('tipodocs', 'captura_correspondencias.tipo_id', '=', 'tipodocs.id')
             ->select('tipodocs.id', 'tipodocs.nombre')
             ->where('captura_correspondencias.id', '=', $correspondencia->id)
             ->get();
         
         $dirigido = DB::table('captura_correspondencias')
-            ->join('dirigidos', 'captura_correspondencias.dirigido', '=', 'dirigidos.id')
+            ->join('dirigidos', 'captura_correspondencias.dirigido_id', '=', 'dirigidos.id')
             ->select('dirigidos.id', 'dirigidos.nombre')
             ->where('captura_correspondencias.id', '=', $correspondencia->id)
             ->get();
             
         $expedient = DB::table('captura_correspondencias')
-            ->join('expedientes', 'captura_correspondencias.expediente', '=', 'expedientes.id')
+            ->join('expedientes', 'captura_correspondencias.expediente_id', '=', 'expedientes.id')
             ->select('expedientes.id', 'expedientes.nombre')
             ->where('captura_correspondencias.id', '=', $correspondencia->id)
             ->get();
@@ -219,19 +219,25 @@ class CapturaCorrespondenciaController extends Controller
         //Validacion de que los campos vengan llenos con la informacion correspondiente
         $campos =[
             'num_entrada' => 'required|string|max:150',
-            'referencia' => 'required|string|max:150',
-            'promotor' => 'required|string|max:150',
-            'remitente' => 'required|string|max:150',
-            'dirigido' => 'required|string|max:150',
+            'date_acuse' => 'required|string|max:150',
+            'hora_acuse' => 'required|string|max:150',
+            'date_elaboracion' => 'required|string|max:150',
+            /* 'referencia' => 'required|string|max:150', */
+            'promoremit_id' => 'required|string|max:150',
+            /* 'remitente' => 'required|string|max:150', */
+            'dirigido_id' => 'required|string|max:150',/* 
             'antecedente' => 'required|string|max:150',
-            'particular' => 'required|string|max:150',
+            'particular' => 'required|string|max:150', */
             'firmado_por' => 'required|string|max:150',
             'cargo' => 'required|string|max:150',
-            'tipo' => 'required|string|max:150',
-            'expediente' => 'required|string|max:150',
+            'tipo_id' => 'required|string|max:150',
+            'expediente_id' => 'required|string|max:150',
             'clasificacion' => 'required|string|max:150',
-            'asunto' => 'required|string|max:150',
-            'evento' => 'required|string|max:150'
+            'asunto' => 'required|string|max:150'/* ,
+            'evento' => 'required|string|max:150',
+            'date_evento' => 'required|string|max:150',
+            'hora_evento' => 'required|string|max:150',
+            'foto' => 'required|max:10000|mimes:jpeg,png,jpg' */
         ];
 
         if( $request->hasFile('foto') ){

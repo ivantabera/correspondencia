@@ -15,7 +15,7 @@ class CreateCapturaCorrespondenciasTable extends Migration
     {
         Schema::create('captura_correspondencias', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('user_id')->unsigned();
             $table->string('referencia');
             $table->string('promotor');
             $table->string('remitente');

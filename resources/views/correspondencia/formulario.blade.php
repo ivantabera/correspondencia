@@ -59,11 +59,11 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="promotor">{{'Promotor'}}</label>
+    <label class="control-label" for="promoremit_id">{{'Promotor'}}</label>
     <select 
         class="form-control {{ $errors->has('Promotor') ? 'is-invalid' : ''  }}" 
-        name="promotor" 
-        id="promotor" 
+        name="promoremit_id" 
+        id="promoremit_id" 
         value="{{ isset($promoremit->id) ? $promoremit->id : old('Promotor') }}">
         @if(isset($promotor))
         <option value="{{$promotor[0]->id}}">{{$promotor[0]->nombre}}</option>
@@ -79,11 +79,11 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="Remitente">{{'Remitente'}}</label>
+    <label class="control-label" for="remitente_id">{{'Remitente'}}</label>
     <select 
         class="form-control {{ $errors->has('remitente') ? 'is-invalid' : ''  }}" 
-        name="remitente" 
-        id="remitente" 
+        name="remitente_id" 
+        id="remitente_id" 
         value="{{ isset($promoremit->id) ? $promoremit->id : old('remitente') }}">
         @if(isset($remitente))
         <option value="{{$remitente[0]->id}}">{{$remitente[0]->nombre}}</option>
@@ -99,11 +99,11 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="dirigido">{{'Dirigido A'}}</label>
+    <label class="control-label" for="dirigido_id">{{'Dirigido A'}}</label>
     <select 
         class="form-control {{ $errors->has('dirigido') ? 'is-invalid' : ''  }}" 
-        name="dirigido" 
-        id="dirigido" 
+        name="dirigido_id" 
+        id="dirigido_id" 
         value="{{ isset($dirigidos->id) ? $dirigidos->id : old('dirigido') }}">
         @if(isset($dirigido))
         <option value="{{$dirigido[0]->id}}">{{$dirigido[0]->nombre}}</option>
@@ -167,11 +167,11 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="tipo">{{'Tipo'}}</label>
+    <label class="control-label" for="tipo_id">{{'Tipo'}}</label>
     <select 
         class="form-control {{ $errors->has('tipo') ? 'is-invalid' : ''  }}" 
-        name="tipo" 
-        id="tipo" 
+        name="tipo_id" 
+        id="tipo_id" 
         value="{{ isset($tipodoc->id) ? $tipodoc->id : old('tipo') }}">
         @if(isset($tipodoc))
             <option value="{{$tipodoc[0]->id}}">{{$tipodoc[0]->nombre}}</option>
@@ -187,11 +187,11 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="expediente">{{'Expediente'}}</label>
+    <label class="control-label" for="expediente_id">{{'Expediente'}}</label>
     <select 
         class="form-control {{ $errors->has('tipo') ? 'is-invalid' : ''  }}" 
-        name="expediente" 
-        id="expediente" 
+        name="expediente_id" 
+        id="expediente_id" 
         value="{{ isset($expedient->id) ? $expedient->id : old('expediente') }}">
         @if(isset($expedient))
             <option value="{{$expedient[0]->id}}">{{$expedient[0]->nombre}}</option>
@@ -255,7 +255,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="hora_evento">{{'Hora de Acuse'}}</label>
+    <label class="control-label" for="hora_evento">{{'Hora de evento'}}</label>
     <input 
         type="time" 
         class="form-control {{ $errors->has('hora_evento') ? 'is-invalid' : ''  }}" 
