@@ -59,11 +59,11 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="promoremit_id">{{'Promotor'}}</label>
+    <label class="control-label" for="promotor_id">{{'Promotor'}}</label>
     <select 
         class="form-control {{ $errors->has('Promotor') ? 'is-invalid' : ''  }}" 
-        name="promoremit_id" 
-        id="promoremit_id" 
+        name="promotor_id" 
+        id="promotor_id" 
         value="{{ isset($promoremit->id) ? $promoremit->id : old('Promotor') }}">
         @if(isset($promotor))
         <option value="{{$promotor[0]->id}}">{{$promotor[0]->nombre}}</option>

@@ -22,10 +22,10 @@
                 <input type="text" name="num_entrada" class="form-control mr-sm-2" placeholder="Numero de entrada" value="{{ request('num_entrada')}}">
             </div>
             <div class="form-group">
-                <input type="text" name="asunto" class="form-control mr-sm-2" placeholder="Asunto" value="{{ request('asunto')}}">
+                <input type="text" name="referencia" class="form-control mr-sm-2" placeholder="Referencia" value="{{ request('referencia')}}">
             </div>
             <div class="form-group">
-                <input type="text" name="referencia" class="form-control mr-sm-2" placeholder="Referencia" value="{{ request('referencia')}}">
+                <input type="text" name="asunto" class="form-control mr-sm-2" placeholder="Asunto" value="{{ request('asunto')}}">
             </div>
             <div class="form-group">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
@@ -45,7 +45,6 @@
                 <th>Referencia</th>
                 <th>Promotor</th>
                 <th>Dirigido</th>
-                <th>Particular</th>
                 <th>Asunto</th>
                 <th>Foto</th>
                 <th>Acciones</th>
@@ -60,7 +59,6 @@
                     <td>{{$correspon->referencia}}</td>
                     <td>{{$correspon->promotor}}</td>
                     <td>{{$correspon->dirigido}}</td>
-                    <td>{{$correspon->particular}}</td>
                     <td>{{$correspon->asunto}}</td>
                     <td>
                         <img src="{{ asset('storage').'/'.$correspon->foto}}" class="img-thumbnail img-fluid" alt="" width="50">

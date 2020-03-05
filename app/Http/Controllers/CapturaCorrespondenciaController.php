@@ -25,15 +25,27 @@ class CapturaCorrespondenciaController extends Controller
         $asunto      = $request->get('asunto');
         $referencia  = $request->get('referencia');
 
-        $datos['correspondencia'] = capturaCorrespondencia::orderBy('id')->where('status', '=', '1')
-            ->nument($num_entrada)
-            ->asunto($asunto)
-            ->referencia($referencia)
+ 
+       /*  $correspondencia = DB::table('captura_correspondencias')
+            ->join('promoremits', 'captura_correspondencias.promotor_id', '=', 'promoremits.id')
+            ->join('dirigidos', 'captura_correspondencias.dirigido_id', '=', 'dirigidos.id')
+            ->where('captura_correspondencias.status', '=', 1)
+            ->orderBy('id')
+            ->select('captura_correspondencias.id', 'captura_correspondencias.num_entrada', 'captura_correspondencias.referencia', 'promoremits.nombre as promotor', 'dirigidos.nombre as dirigido', 'captura_correspondencias.asunto', 'captura_correspondencias.foto')
             ->paginate(5);
-
-        //return response()->json($datos);
+        */
+        $correspondencia = capturaCorrespondencia::where('status', '=', '1')
+        ->join('promoremits', 'captura_correspondencias.promotor_id', '=', 'promoremits.id')
+        ->join('dirigidos', 'captura_correspondencias.dirigido_id', '=', 'dirigidos.id')
+        ->select('captura_correspondencias.id', 'captura_correspondencias.num_entrada', 'captura_correspondencias.referencia', 'promoremits.nombre as promotor', 'dirigidos.nombre as dirigido', 'captura_correspondencias.asunto', 'captura_correspondencias.foto')
+        ->nument($num_entrada)
+        ->asunto($asunto)
+        ->referencia($referencia)
+        ->paginate(5);
+        
+        //return response()->json($num_entrada);
         //Alert::success('Success Title', 'Success Message');
-        return view('correspondencia.index', $datos);
+        return view('correspondencia.index', compact('correspondencia'));
     }
 
     /**
@@ -81,7 +93,7 @@ class CapturaCorrespondenciaController extends Controller
             'hora_acuse' => 'required|string|max:150',
             'date_elaboracion' => 'required|string|max:150',
             /* 'referencia' => 'required|string|max:150', */
-            'promoremit_id' => 'required|string|max:150',
+            'promotor_id' => 'required|string|max:150',
             /* 'remitente' => 'required|string|max:150', */
             'dirigido_id' => 'required|string|max:150',/* 
             'antecedente' => 'required|string|max:150',
@@ -158,7 +170,7 @@ class CapturaCorrespondenciaController extends Controller
         $expedientes = DB::table('expedientes')->get();
 
         $promotor = DB::table('captura_correspondencias')
-            ->join('promoremits', 'captura_correspondencias.promoremit_id', '=', 'promoremits.id')
+            ->join('promoremits', 'captura_correspondencias.promotor_id', '=', 'promoremits.id')
             ->select('promoremits.id', 'promoremits.nombre')
             ->where('captura_correspondencias.id', '=', $correspondencia->id)
             ->get();
@@ -215,7 +227,7 @@ class CapturaCorrespondenciaController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        
         //Validacion de que los campos vengan llenos con la informacion correspondiente
         $campos =[
             'num_entrada' => 'required|string|max:150',
@@ -223,7 +235,7 @@ class CapturaCorrespondenciaController extends Controller
             'hora_acuse' => 'required|string|max:150',
             'date_elaboracion' => 'required|string|max:150',
             /* 'referencia' => 'required|string|max:150', */
-            'promoremit_id' => 'required|string|max:150',
+            'promotor_id' => 'required|string|max:150',
             /* 'remitente' => 'required|string|max:150', */
             'dirigido_id' => 'required|string|max:150',/* 
             'antecedente' => 'required|string|max:150',
@@ -239,6 +251,7 @@ class CapturaCorrespondenciaController extends Controller
             'hora_evento' => 'required|string|max:150',
             'foto' => 'required|max:10000|mimes:jpeg,png,jpg' */
         ];
+
 
         if( $request->hasFile('foto') ){
             $campos += ['foto' => 'required|max:10000|mimes:jpeg,png,jpg'];
