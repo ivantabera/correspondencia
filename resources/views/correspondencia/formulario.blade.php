@@ -61,7 +61,7 @@
 <div class="form-group">
     <label class="control-label" for="promotor_id">{{'Promotor'}}</label>
     <select 
-        class="form-control {{ $errors->has('Promotor') ? 'is-invalid' : ''  }}" 
+        class="form-control {{ $errors->has('Promotor') ? 'is-invalid' : ''  }} promotor" 
         name="promotor_id" 
         id="promotor_id" 
         value="{{ isset($promoremit->id) ? $promoremit->id : old('Promotor') }}">
@@ -81,7 +81,7 @@
 <div class="form-group">
     <label class="control-label" for="remitente_id">{{'Remitente'}}</label>
     <select 
-        class="form-control {{ $errors->has('remitente') ? 'is-invalid' : ''  }}" 
+        class="form-control {{ $errors->has('remitente') ? 'is-invalid' : ''  }} remitente" 
         name="remitente_id" 
         id="remitente_id" 
         value="{{ isset($promoremit->id) ? $promoremit->id : old('remitente') }}">
@@ -101,7 +101,7 @@
 <div class="form-group">
     <label class="control-label" for="dirigido_id">{{'Dirigido A'}}</label>
     <select 
-        class="form-control {{ $errors->has('dirigido') ? 'is-invalid' : ''  }}" 
+        class="form-control {{ $errors->has('dirigido') ? 'is-invalid' : ''  }} dirigido" 
         name="dirigido_id" 
         id="dirigido_id" 
         value="{{ isset($dirigidos->id) ? $dirigidos->id : old('dirigido') }}">
@@ -169,7 +169,7 @@
 <div class="form-group">
     <label class="control-label" for="tipo_id">{{'Tipo'}}</label>
     <select 
-        class="form-control {{ $errors->has('tipo') ? 'is-invalid' : ''  }}" 
+        class="form-control {{ $errors->has('tipo') ? 'is-invalid' : ''  }} tipo" 
         name="tipo_id" 
         id="tipo_id" 
         value="{{ isset($tipodoc->id) ? $tipodoc->id : old('tipo') }}">
@@ -189,7 +189,7 @@
 <div class="form-group">
     <label class="control-label" for="expediente_id">{{'Expediente'}}</label>
     <select 
-        class="form-control {{ $errors->has('tipo') ? 'is-invalid' : ''  }}" 
+        class="form-control {{ $errors->has('tipo') ? 'is-invalid' : ''  }} expediente" 
         name="expediente_id" 
         id="expediente_id" 
         value="{{ isset($expedient->id) ? $expedient->id : old('expediente') }}">

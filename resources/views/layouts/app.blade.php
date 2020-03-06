@@ -14,7 +14,11 @@
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('js/sweetalert2.all.min.js')}}"></script>
 
-    <script src="{{ asset('js/autoCompleCorres.js') }}"></script>
+    {{-- con DEFER Un script que no se ejecutará hasta que la página se haya cargado --}}
+    <script src="{{ asset('js/select2.min.js')}}" defer></script>
+    
+    <script src="{{ asset('js/formularioCorrespondencia.js') }}"></script>
+    
     @yield('script')
 
     <!-- Fonts -->
@@ -22,8 +26,9 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    
 </head>
 <body>
 
@@ -146,6 +151,5 @@
         </main>
     </div>
 </body>
-
 
 </html>

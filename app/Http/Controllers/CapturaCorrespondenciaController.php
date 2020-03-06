@@ -25,15 +25,6 @@ class CapturaCorrespondenciaController extends Controller
         $asunto      = $request->get('asunto');
         $referencia  = $request->get('referencia');
 
- 
-       /*  $correspondencia = DB::table('captura_correspondencias')
-            ->join('promoremits', 'captura_correspondencias.promotor_id', '=', 'promoremits.id')
-            ->join('dirigidos', 'captura_correspondencias.dirigido_id', '=', 'dirigidos.id')
-            ->where('captura_correspondencias.status', '=', 1)
-            ->orderBy('id')
-            ->select('captura_correspondencias.id', 'captura_correspondencias.num_entrada', 'captura_correspondencias.referencia', 'promoremits.nombre as promotor', 'dirigidos.nombre as dirigido', 'captura_correspondencias.asunto', 'captura_correspondencias.foto')
-            ->paginate(5);
-        */
         $correspondencia = capturaCorrespondencia::where('status', '=', '1')
         ->join('promoremits', 'captura_correspondencias.promotor_id', '=', 'promoremits.id')
         ->join('dirigidos', 'captura_correspondencias.dirigido_id', '=', 'dirigidos.id')
@@ -67,6 +58,8 @@ class CapturaCorrespondenciaController extends Controller
         $consecutivoNumEntrada = DB::table('captura_correspondencias as cc')
             ->max('cc.num_entrada');
         $consecutivoNumEntrada ++;
+
+        //return response()->json($consecutivoNumEntrada);
 
         return view('correspondencia.crear', [
             'promoremit' => $promoremit,

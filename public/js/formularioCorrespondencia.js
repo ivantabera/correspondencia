@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+    /* Automatizar por peticion AJAX los campos de encargado y cargo */
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -26,6 +27,13 @@ $(document).ready(function(){
            }
         });
   
-	});
+    });
 
+    /* Uso de select2 para los distintos select del formulario */
+    $('.promotor').select2();
+    $('.remitente').select2();
+    $('.dirigido').select2();
+    $('.tipo').select2();
+    $('.expediente').select2();
+     
  });
