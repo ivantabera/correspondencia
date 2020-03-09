@@ -55,7 +55,7 @@
             @foreach($correspondencia as $correspon)
                 <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td>SDGM20-00{{$correspon->num_entrada}}</td>
+                    <td>{{$correspon->num_entrada}}</td>
                     <td>{{$correspon->referencia}}</td>
                     <td>{{$correspon->promotor}}</td>
                     <td>{{$correspon->dirigido}}</td>

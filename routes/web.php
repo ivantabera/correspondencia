@@ -79,6 +79,27 @@ Route::middleware(['auth'])->group(function(){
     Route::put('correspondencia/status/{id}', 'CapturaCorrespondenciaController@status')->name('correspondencia.status')
             ->middleware('can:correspondencia.status');
     
+    //turno
+    Route::post('turno/store', 'TurnoController@store')->name('turno.store')
+    ->middleware('can:turno.create');
+
+    Route::get('turno', 'TurnoController@index')->name('turno.index')
+    ->middleware('can:turno.index');
+    
+    Route::get('turno/create', 'TurnoController@create')->name('turno.create')
+    ->middleware('can:turno.create');
+    
+    Route::put('turno/{id}', 'TurnoController@update')->name('turno.update')
+    ->middleware('can:turno.edit');
+    
+    Route::get('turno/{id}', 'TurnoController@show')->name('turno.show')
+    ->middleware('can:turno.show');
+    
+    Route::delete('turno/{id}', 'TurnoController@destroy')->name('turno.destroy')
+    ->middleware('can:turno.destroy');
+    
+    Route::get('turno/{id}/edit', 'TurnoController@edit')->name('turno.edit')
+    ->middleware('can:turno.edit');
     
     //Promotores y remitentes
     Route::post('promoremit/store', 'PromoremitController@store')->name('promoremit.store')

@@ -34,7 +34,21 @@ class CapturaCorrespondenciaController extends Controller
         ->referencia($referencia)
         ->paginate(5);
         
-        //return response()->json($num_entrada);
+        foreach ($correspondencia as $val) {
+            
+            $cant = strlen($val['num_entrada']);
+
+            if($cant == 1){
+                $val['num_entrada'] = 'SDGM20-000'. $val['num_entrada'];
+            } elseif($cant == 2){
+                $val['num_entrada'] = 'SDGM20-00'. $val['num_entrada'];
+            } elseif($cant == 3){
+                $val['num_entrada'] = 'SDGM20-0'. $val['num_entrada'];
+            }
+        }
+
+        //return response()->json($correspondencia);
+
         //Alert::success('Success Title', 'Success Message');
         return view('correspondencia.index', compact('correspondencia'));
     }
