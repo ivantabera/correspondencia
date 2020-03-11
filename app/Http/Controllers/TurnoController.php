@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\turno;
+use App\capturaCorrespondencia;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class TurnoController extends Controller
 {
@@ -22,9 +25,31 @@ class TurnoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $id = $request['idCorrespondencia'];
+        $correspondencia = capturaCorrespondencia::findOrFail($id);
+
+            
+            $cant = strlen($correspondencia['num_entrada']);
+
+            if($cant == 1){
+                $correspondencia['num_entrada'] = 'SDGM20-000'. $correspondencia['num_entrada'];
+            } elseif($cant == 2){
+                $correspondencia['num_entrada'] = 'SDGM20-00'. $correspondencia['num_entrada'];
+            } elseif($cant == 3){
+                $correspondencia['num_entrada'] = 'SDGM20-0'. $correspondencia['num_entrada'];
+            }
+
+        $now = Carbon::now();
+        $turnadoa = DB::table('turnadoccps')->get();
+        $ccp = DB::table('turnadoccps')->get();
+        $turnadopor = DB::table('turnadopors')->get();
+        $instrucciones = DB::table('instruccions')->get();
+        $semaforo = DB::table('semaforos')->get();
+
+        return view('turno.crear', compact('correspondencia', 'turnadoa', 'ccp', 'turnadopor', 'instrucciones', 'semaforo', 'now'));
     }
 
     /**
@@ -55,9 +80,10 @@ class TurnoController extends Controller
      * @param  \App\turno  $turno
      * @return \Illuminate\Http\Response
      */
-    public function edit(turno $turno)
+    public function edit($id)
     {
         //
+        
     }
 
     /**

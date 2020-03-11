@@ -69,6 +69,15 @@
                             Editar
                         </a>
                         @endcan()
+
+                        @can('turno.crear')
+                        <form method="post" action="{{ url('/turno/create') }}" class="formCrear" style="display:inline">
+                            {{ csrf_field() }} <!--token para que nos permita acceder-->
+                            {{ method_field('GET') }} <!--metodo que vamos a ejecutar-->
+                            <input type="hidden" name="idCorrespondencia" class="idCorrespondencia" value="{{$correspon->id}}">
+                            <button type="submit"  class="btn btn-secondary">Turnar</button>
+                        </form>
+                        @endcan()
                         
                         {{-- Formulario que cambia de status --}}
                         @can('correspondencia.status')

@@ -35,5 +35,6 @@ $(document).ready(function(){
     $('.dirigido').select2();
     $('.tipo').select2();
     $('.expediente').select2();
+    $('.turnado_a').select2();
      
  });
