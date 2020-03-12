@@ -60,7 +60,49 @@ class TurnoController extends Controller
      */
     public function store(Request $request)
     {
+
         //
+        //Validacion de que los campos vengan llenos con la informacion correspondiente
+
+        /* $campos =[
+            'oficio' => 'required',
+            'fecha_turno' => 'required',
+            'turnado_a' => 'required',
+            'turnado_por' => 'required',
+            'instruccion_adicional' => 'required',
+            'instruccion' => 'required',
+            'semaforo' => 'required',
+            'respuesta_auto' => 'required',
+            'compromiso_date' => 'required'
+        ]; */
+
+        //enviar el mensaje con el atributo si esta erroneo
+        //$Mensaje = ["required" => 'El campo :attribute es requerido'];
+        //metodo validate para enviar los errores a la vista
+        //$this->validate($request, $campos, $Mensaje);
+
+        /** Se almacene todo lo que se envia al metodo storage en la variable  $datosTurno */
+        //$datosTurno = request()->all();
+
+        /** Al recabar la informacion evitar que el campo token se inserte en la BD */
+        
+        $datosTurno = request()->except('_token');
+
+        $datosTurno['ccp'] = json_encode($request->ccp);
+        $datosTurno['user_id'] = auth()->id();
+
+
+        $datosTurno['created_at'] = \Carbon\Carbon::now();
+        $datosTurno['updated_at'] = \Carbon\Carbon::now();
+
+        //echo json_encode($datosTurno); exit;
+
+        turno::insert($datosTurno);
+
+        //return response()->json($datosTurno);
+
+        //Enviar mensaje a la vista correspondencia ""with"
+        return redirect('correspondencia')->with('Mensaje','Turno agregado con éxito');
     }
 
     /**

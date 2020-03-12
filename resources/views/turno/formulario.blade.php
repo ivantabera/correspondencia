@@ -51,14 +51,14 @@
             <br>
             @endforeach
     </select>
-    {!! $errors->first('remitente','<div class="invalid-feedback">:message</div>') !!}
+    {!! $errors->first('turnado_a','<div class="invalid-feedback">:message</div>') !!}
 </div>
 
 <div class="form-group">
     <label class="control-label" for="ccp">{{'C.C.P'}}</label>
     <select 
         class="form-control {{ $errors->has('ccp') ? 'is-invalid' : ''  }} ccp" 
-        name="ccp" 
+        name="ccp[]" 
         id="ccp" 
         value="{{ isset($ccp->id) ? $ccp->id : old('ccp') }}"
         multiple
@@ -93,19 +93,19 @@
             <br>
             @endforeach
     </select>
-    {!! $errors->first('remitente','<div class="invalid-feedback">:message</div>') !!}
+    {!! $errors->first('turnado_por','<div class="invalid-feedback">:message</div>') !!}
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="ints_adic">{{'Instrucciones adicionales'}}</label>
+    <label class="control-label" for="instruccion_adicional">{{'Instrucciones adicionales'}}</label>
     <input 
         type="text" 
-        class="form-control {{ $errors->has('ints_adic') ? 'is-invalid' : ''  }}" 
-        name="ints_adic" 
-        id="ints_adic" 
-        value="{{ isset($turno->instruccion_adicional) ? $turno->instruccion_adicional : old('ints_adic') }}">
+        class="form-control {{ $errors->has('instruccion_adicional') ? 'is-invalid' : ''  }}" 
+        name="instruccion_adicional" 
+        id="instruccion_adicional" 
+        value="{{ isset($turno->instruccion_adicional) ? $turno->instruccion_adicional : old('instruccion_adicional') }}">
     <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
-    {!! $errors->first('ints_adic','<div class="invalid-feedback">:message</div>') !!}
+    {!! $errors->first('instruccion_adicional','<div class="invalid-feedback">:message</div>') !!}
 </div>
 
 <div class="form-group">
@@ -125,47 +125,47 @@
             <br>
             @endforeach
     </select>
-    {!! $errors->first('remitente','<div class="invalid-feedback">:message</div>') !!}
+    {!! $errors->first('instruccion','<div class="invalid-feedback">:message</div>') !!}
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="Mod">{{'Prioridad'}}</label>
+    <label class="control-label" for="semaforo">{{'Prioridad'}}</label>
     <br>
     <label class="radio-inline">
         <input 
             type="radio" 
-            name="prioridad" 
+            name="semaforo" 
             value="0" 
-            id="prioridad0"
+            id="semaforo0"
             {{ isset($turno->semaforo) ? ($turno->semaforo== '0' ? "checked" : '') : 'checked' }}>
-            <label class="alert alert-secondary" for="prioridad0">0</label>
+            <label class="alert alert-secondary" for="semaforo0">0</label>
     </label>
     <label class="radio-inline">
         <input 
             type="radio" 
-            name="prioridad" 
+            name="semaforo" 
             value="3" 
-            id="prioridad3"
+            id="semaforo3"
             {{ isset($turno->semaforo) ? ($turno->semaforo== '3' ? "checked" : '') : '' }}>
-            <label class="alert alert-success" for="prioridad3">3</label>
+            <label class="alert alert-success" for="semaforo3">3</label>
     </label>
     <label class="radio-inline">
         <input 
             type="radio" 
-            name="prioridad" 
+            name="semaforo" 
             value="2" 
-            id="prioridad2"
+            id="semaforo2"
             {{ isset($turno->semaforo) ? ($turno->semaforo== '2' ? "checked" : '') : '' }}>
-            <label class="alert alert-warning" for="prioridad2">2</label>
+            <label class="alert alert-warning" for="semaforo2">2</label>
     </label>
     <label class="radio-inline">
         <input 
             type="radio" 
-            name="prioridad" 
+            name="semaforo" 
             value="1" 
-            id="prioridad1"
+            id="semaforo1"
             {{ isset($turno->semaforo) ? ($turno->semaforo== '1' ? "checked" : '') : '' }}>
-            <label class="alert alert-danger" for="prioridad1">1</label>
+            <label class="alert alert-danger" for="semaforo1">1</label>
     </label>
 </div>
 
