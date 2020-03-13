@@ -135,37 +135,37 @@
         <input 
             type="radio" 
             name="semaforo" 
-            value="0" 
+            value="1" 
             id="semaforo0"
             {{ isset($turno->semaforo) ? ($turno->semaforo== '0' ? "checked" : '') : 'checked' }}>
-            <label class="alert alert-secondary" for="semaforo0">0</label>
-    </label>
-    <label class="radio-inline">
-        <input 
-            type="radio" 
-            name="semaforo" 
-            value="3" 
-            id="semaforo3"
-            {{ isset($turno->semaforo) ? ($turno->semaforo== '3' ? "checked" : '') : '' }}>
-            <label class="alert alert-success" for="semaforo3">3</label>
+            <label class="btn btn-secondary"  for="semaforo0">0</label>
     </label>
     <label class="radio-inline">
         <input 
             type="radio" 
             name="semaforo" 
             value="2" 
-            id="semaforo2"
-            {{ isset($turno->semaforo) ? ($turno->semaforo== '2' ? "checked" : '') : '' }}>
-            <label class="alert alert-warning" for="semaforo2">2</label>
+            id="semaforo3"
+            {{ isset($turno->semaforo) ? ($turno->semaforo== '3' ? "checked" : '') : '' }}>
+            <label class="btn btn-success" for="semaforo3">3</label>
     </label>
     <label class="radio-inline">
         <input 
             type="radio" 
             name="semaforo" 
-            value="1" 
+            value="3" 
+            id="semaforo2"
+            {{ isset($turno->semaforo) ? ($turno->semaforo== '2' ? "checked" : '') : '' }}>
+            <label class="btn btn-warning" for="semaforo2">2</label>
+    </label>
+    <label class="radio-inline">
+        <input 
+            type="radio" 
+            name="semaforo" 
+            value="4" 
             id="semaforo1"
             {{ isset($turno->semaforo) ? ($turno->semaforo== '1' ? "checked" : '') : '' }}>
-            <label class="alert alert-danger" for="semaforo1">1</label>
+            <label class="btn btn-danger" for="semaforo1">1</label>
     </label>
 </div>
 
@@ -173,7 +173,7 @@
     <label class="control-label" for="respuesta_auto">{{'Respuesta'}}</label>
     <input 
         type="text" 
-        class="form-control {{ $errors->has('respuesta_auto') ? 'is-invalid' : ''  }}" 
+        class="form-control {{ $errors->has('respuesta_auto') ? 'is-invalid' : ''  }} respuesta_auto" 
         name="respuesta_auto" 
         id="respuesta_auto" 
         value="{{ isset($correspondencia['respuesta_auto']) ? $correspondencia['respuesta_auto'] : old('respuesta_auto') }}">
@@ -184,11 +184,11 @@
 <div class="form-group">
     <label class="control-label" for="compromiso_date">{{'Compromiso'}}</label>
     <input 
-        type="date" 
-        class="form-control {{ $errors->has('compromiso_date') ? 'is-invalid' : ''  }}" 
+        type="text" 
+        class="form-control {{ $errors->has('compromiso_date') ? 'is-invalid' : ''  }} compromiso_date" 
         name="compromiso_date" 
         id="compromiso_date" 
-        value="{{ isset($correspondencia->compromiso_date) ? $correspondencia->compromiso_date : old('compromiso_date', $now->format('Y-m-d')) }}">
+        value="{{ isset($correspondencia->compromiso_date) ? $correspondencia->compromiso_date : old('compromiso_date') }}" readonly>
     <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
     {!! $errors->first('compromiso_date','<div class="invalid-feedback">:message</div>') !!}
 </div>

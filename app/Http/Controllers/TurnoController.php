@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\turno;
+use App\semaforo;
 use App\capturaCorrespondencia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -149,5 +150,89 @@ class TurnoController extends Controller
     public function destroy(turno $turno)
     {
         //
+    }
+
+    public function getajax()
+    {
+        $resp = array('s' => 0, 'm' => 'error');
+		$data = array();
+		$data = array_merge($data, (array) $_POST);
+
+        if($data['dias'] != 0){
+
+            // dias a sumar
+            $dias = $data['dias'];
+            // dias que el programa ha contado
+            $dias_contados = 0;
+            // timestamp actual
+            $time = time();
+            // duracion (en segundos) que tiene un día
+            $dia_time = 3600*24; //3600 segundos en una hora * 24 horas que tiene un dia.
+
+            function esFestivo($time) {
+                $dias_saltados = array(0,6); // 0: domingo, 1: lunes... 6:sabado
+                // Guardamos en una variable los dias festivos en varios arrays con formato
+                // $dias_festivos[año][mes] = [dias festivos];
+                $dias_festivos = array(
+                    "2020"=>array(
+                        '1'  => [1], 
+                        '2'  => [3], 
+                        '3'  => [16],
+                        '4'  => [9,10],
+                        '5'  => [1], 
+                        '9'  => [16], 
+                        '11' => [16], 
+                        '12' => [25]),
+                    "2021"=>array(
+                        '1'  => [3,4,5,25,31])
+                );
+
+                $w = date("w",$time); // dia de la semana en formato 0-6
+                if(in_array($w, $dias_saltados)) return true;
+                $j = date("j",$time); // dia en formato 1 - 31
+                $n = date("n",$time); // mes en formato 1 - 12
+                $y = date("Y",$time); // año en formato XXXX
+                if(isset($dias_festivos[$y]) && isset($dias_festivos[$y][$n]) && in_array($j,$dias_festivos[$y][$n])) return true;
+
+                return false;
+            }
+        
+            while($dias != 0) {
+                $dias_contados++;
+                $tiempoContado = $time+($dia_time*$dias_contados); // Sacamos el timestamp en la que estamos ahora mismo comprobando
+                if(esFestivo($tiempoContado) == false)
+                    $dias--;
+            }
+
+            //var_dump( "El programa ha recorrido ".$dias_contados." (ha saltado ".($dias_contados-$dias_origin).") hasta llegar la fecha que deseabas:".PHP_EOL.date("D, d/m/Y",$tiempoContado)); 
+            $fechaCompromiso = date("d/m/Y",$tiempoContado);
+
+            $semaforo = semaforo::find($data['semaforo']);
+
+            if($semaforo){
+                $resp['s'] = 1;
+                $resp['m'] = 'success';
+                $resp['semaforodata'] = $semaforo;
+                $resp['fechaCompromiso'] = $fechaCompromiso;
+            }else{
+                $resp['s'] = 0;
+                $resp['m'] = 'error, no hay registro';
+            }
+
+            return response()->json($resp); 
+        }
+
+        $semaforo = semaforo::find($data['semaforo']);
+        if($semaforo){
+            $resp['s'] = 1;
+            $resp['m'] = 'success';
+            $resp['semaforodata'] = $semaforo;
+            $resp['fechaCompromiso'] = "";
+        }else{
+            $resp['s'] = 0;
+            $resp['m'] = 'error, no hay registro';
+        }
+
+        return response()->json($resp); 
     }
 }

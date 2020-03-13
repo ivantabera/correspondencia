@@ -100,6 +100,9 @@ Route::middleware(['auth'])->group(function(){
     
     Route::get('turno/{id}/edit', 'TurnoController@edit')->name('turno.edit')
     ->middleware('can:turno.edit');
+
+    //Peticion ajax para autorrelleno de formulario correspondencia
+    Route::post('turno/getajax','TurnoController@getajax')->name('turno.getajax');
     
     //Promotores y remitentes
     Route::post('promoremit/store', 'PromoremitController@store')->name('promoremit.store')

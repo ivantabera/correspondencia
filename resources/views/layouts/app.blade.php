@@ -18,6 +18,7 @@
     <script src="{{ asset('js/select2.min.js')}}" defer></script>
     
     <script src="{{ asset('js/formularioCorrespondencia.js') }}"></script>
+    <script src="{{ asset('js/formularioTurno.js') }}"></script>
     
     @yield('script')
 
