@@ -86,6 +86,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('turno', 'TurnoController@index')->name('turno.index')
     ->middleware('can:turno.index');
     
+    Route::get('turno/index/{id}', 'TurnoController@indexturno')->name('turno.indexturno')
+    ->middleware('can:turno.indexturno');
+    
     Route::get('turno/create', 'TurnoController@create')->name('turno.create')
     ->middleware('can:turno.create');
     

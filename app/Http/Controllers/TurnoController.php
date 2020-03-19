@@ -16,9 +16,38 @@ class TurnoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+
+        return view('turno.index');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexturno($id)
+    {
+        //
+        
+        $turno = turno::where('folio', '=', $id)
+        ->join('turnadoccps', 'turnos.turnado_a', '=', 'turnadoccps.id')
+        ->join('turnadopors', 'turnos.turnado_por', '=', 'turnadopors.id')
+        ->select('turnos.folio',
+                 'turnos.oficio', 
+                 'turnos.turno_num', 
+                 'turnos.fecha_turno', 
+                 'turnadoccps.nombre as turnado_a', 
+                 'turnos.compromiso_date',
+                 'turnadopors.nombre as turnado_por')
+        ->paginate(5);
+
+        $folio = $id; //este sirve para enviar el valor para el boton de turno nuevo
+
+        //return response()->json($folio);
+        return view('turno.indexturno', compact('turno', 'folio'));
     }
 
     /**
@@ -205,7 +234,7 @@ class TurnoController extends Controller
             }
 
             //var_dump( "El programa ha recorrido ".$dias_contados." (ha saltado ".($dias_contados-$dias_origin).") hasta llegar la fecha que deseabas:".PHP_EOL.date("D, d/m/Y",$tiempoContado)); 
-            $fechaCompromiso = date("d/m/Y",$tiempoContado);
+            $fechaCompromiso = date("Y-m-d",$tiempoContado);
 
             $semaforo = semaforo::find($data['semaforo']);
 

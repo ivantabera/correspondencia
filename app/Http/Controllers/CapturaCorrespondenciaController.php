@@ -28,7 +28,13 @@ class CapturaCorrespondenciaController extends Controller
         $correspondencia = capturaCorrespondencia::where('status', '=', '1')
         ->join('promoremits', 'captura_correspondencias.promotor_id', '=', 'promoremits.id')
         ->join('dirigidos', 'captura_correspondencias.dirigido_id', '=', 'dirigidos.id')
-        ->select('captura_correspondencias.id', 'captura_correspondencias.num_entrada', 'captura_correspondencias.referencia', 'promoremits.nombre as promotor', 'dirigidos.nombre as dirigido', 'captura_correspondencias.asunto', 'captura_correspondencias.foto')
+        ->select('captura_correspondencias.id', 
+                 'captura_correspondencias.num_entrada', 
+                 'captura_correspondencias.referencia', 
+                 'promoremits.nombre as promotor', 
+                 'dirigidos.nombre as dirigido', 
+                 'captura_correspondencias.asunto', 
+                 'captura_correspondencias.foto')
         ->nument($num_entrada)
         ->asunto($asunto)
         ->referencia($referencia)
