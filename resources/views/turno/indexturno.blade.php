@@ -16,7 +16,7 @@
         <form method="post" action="{{ url('/turno/create') }}" class="formCrear" style="display:inline">
             {{ csrf_field() }} <!--token para que nos permita acceder-->
             {{ method_field('GET') }} <!--metodo que vamos a ejecutar-->
-            <input type="hidden" name="idCorrespondencia" class="idCorrespondencia" value="{{$folio}}">
+            <input type="hidden" name="idTurno" class="idTurno" value="{{$folio}}">
             <button type="submit"  class="btn btn-success">Crear Turno</button>
         </form>
         @endcan()
@@ -40,24 +40,24 @@
         </thead>
 
         <tbody>
-            @foreach($turno as $correspon)
+            @foreach($turno as $turn)
                 <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td>{{$correspon->oficio}}</td>
-                    <td>{{$correspon->fecha_turno}}</td>
-                    <td>{{$correspon->turnado_a}}</td>
-                    <td>{{$correspon->compromiso_date}}</td>
-                    <td>{{$correspon->turnado_por}}</td>
+                    <td>{{$turn->oficio}} {{ $contarTurnos > 1 ? - $turn->turno_num : ''}}</td>
+                    <td>{{$turn->fecha_turno}}</td>
+                    <td>{{$turn->turnado_a}}</td>
+                    <td>{{$turn->compromiso_date}}</td>
+                    <td>{{$turn->turnado_por}}</td>
                     <td>
                         @can('correspondencia.edit')
-                        <a href="{{ url('/correspondencia/'.$correspon->id.'/edit') }}" class="btn btn-warning">
+                        <a href="{{ url('/turno/'.$turn->id.'/edit') }}" class="btn btn-warning">
                             Editar
                         </a>
                         @endcan()
                         
                         {{-- Formulario que cambia de status --}}
                         @can('turno.status')
-                        <form method="post" action="{{ url('/turno/status/'.$correspon->id) }}" class="formStatus" style="display:inline">
+                        <form method="post" action="{{ url('/turno/status/'.$turn->id) }}" class="formStatus" style="display:inline">
                             {{ csrf_field() }} <!--token para que nos permita acceder-->
                             {{ method_field('PUT') }} <!--metodo que vamos a ejecutar-->
                             <button 
@@ -89,7 +89,7 @@
                         @endcan() 
                         --}}
                         @can('correspondencia.pdf')
-                        <a href="{{ url('/imprimir/'.$correspon->id) }}" class="btn btn-primary pdf" target="_blank">
+                        <a href="{{ url('/imprimir/'.$turn->id) }}" class="btn btn-primary pdf" target="_blank">
                             PDF
                         </a>
                         @endcan()

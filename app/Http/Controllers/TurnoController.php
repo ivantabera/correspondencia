@@ -32,22 +32,34 @@ class TurnoController extends Controller
     {
         //
         
-        $turno = turno::where('folio', '=', $id)
+        $turno = turno::where('folio', '=', $id) //consulta para mostrar en la vista la informacion de los turnos de correspondencia 
         ->join('turnadoccps', 'turnos.turnado_a', '=', 'turnadoccps.id')
         ->join('turnadopors', 'turnos.turnado_por', '=', 'turnadopors.id')
-        ->select('turnos.folio',
+        ->select('turnos.id', 
                  'turnos.oficio', 
                  'turnos.turno_num', 
                  'turnos.fecha_turno', 
                  'turnadoccps.nombre as turnado_a', 
                  'turnos.compromiso_date',
                  'turnadopors.nombre as turnado_por')
+        ->orderBy('turnos.turno_num')
         ->paginate(5);
+
+        $contarTurnos =  turno::where('folio', '=', $id) //consulta para validar cuantos turnos hay de esta correspondencia y controlar el sufijo
+        ->join('turnadoccps', 'turnos.turnado_a', '=', 'turnadoccps.id')
+        ->join('turnadopors', 'turnos.turnado_por', '=', 'turnadopors.id')
+        ->select('turnos.oficio', 
+                 'turnos.turno_num', 
+                 'turnos.fecha_turno', 
+                 'turnadoccps.nombre as turnado_a', 
+                 'turnos.compromiso_date',
+                 'turnadopors.nombre as turnado_por')
+        ->count();  
 
         $folio = $id; //este sirve para enviar el valor para el boton de turno nuevo
 
         //return response()->json($folio);
-        return view('turno.indexturno', compact('turno', 'folio'));
+        return view('turno.indexturno', compact('turno', 'folio', 'contarTurnos'));
     }
 
     /**
@@ -58,7 +70,7 @@ class TurnoController extends Controller
     public function create(Request $request)
     {
         //
-        $id = $request['idCorrespondencia'];
+        $id = $request['idTurno'];
         $correspondencia = capturaCorrespondencia::findOrFail($id);
 
             
@@ -79,7 +91,12 @@ class TurnoController extends Controller
         $instrucciones = DB::table('instruccions')->get();
         $semaforo = DB::table('semaforos')->get();
 
-        return view('turno.crear', compact('correspondencia', 'turnadoa', 'ccp', 'turnadopor', 'instrucciones', 'semaforo', 'now'));
+        $turno_num = turno::where('folio', '=', $request['idTurno'])->max("turno_num"); //seleccionamos el turno_num maximo 
+        $turno_num++; // Sumamos '1' para hacer un consecutivo para crear el nuevo turno
+
+        //return response()->json($turno_num);
+
+        return view('turno.crear', compact('correspondencia', 'turno_num', 'turnadoa', 'ccp', 'turnadopor', 'instrucciones', 'semaforo', 'now'));
     }
 
     /**

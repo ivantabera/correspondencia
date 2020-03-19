@@ -13,11 +13,11 @@
 <div class="form-group">
     {{-- <label class="control-label" for="turno_num">{{'turno_num'}}</label> --}}
     <input 
-        type="text" 
+        type="hidden" 
         class="form-control {{ $errors->has('turno_num') ? 'is-invalid' : ''  }}" 
         name="turno_num" 
         id="turno_num" 
-        value="{{ isset($correspondencia->id) ? $correspondencia->id : "" }}">
+        value="{{ isset($turno_num) ? $turno_num : "" }}">
     <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
     {!! $errors->first('turno_num','<div class="invalid-feedback">:message</div>') !!}
 </div>
