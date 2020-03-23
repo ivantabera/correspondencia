@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\turno;
 use App\semaforo;
 use App\capturaCorrespondencia;
+use App\turnadoccp;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -33,6 +34,7 @@ class TurnoController extends Controller
         //
         
         $turno = turno::where('folio', '=', $id) //consulta para mostrar en la vista la informacion de los turnos de correspondencia 
+        ->where('status', '=', '1')
         ->join('turnadoccps', 'turnos.turnado_a', '=', 'turnadoccps.id')
         ->join('turnadopors', 'turnos.turnado_por', '=', 'turnadopors.id')
         ->select('turnos.id', 
@@ -58,7 +60,7 @@ class TurnoController extends Controller
 
         $folio = $id; //este sirve para enviar el valor para el boton de turno nuevo
 
-        //return response()->json($folio);
+        //return response()->json($turno);
         return view('turno.indexturno', compact('turno', 'folio', 'contarTurnos'));
     }
 
@@ -85,8 +87,8 @@ class TurnoController extends Controller
             }
 
         $now = Carbon::now();
-        $turnadoa = DB::table('turnadoccps')->get();
-        $ccp = DB::table('turnadoccps')->get();
+        $turnadoa = DB::table('turnadoccps')->orderBy('turnadoccps.nombre')->get();
+        $ccp = DB::table('turnadoccps')->orderBy('turnadoccps.nombre')->get();
         $turnadopor = DB::table('turnadopors')->get();
         $instrucciones = DB::table('instruccions')->get();
         $semaforo = DB::table('semaforos')->get();
@@ -94,7 +96,7 @@ class TurnoController extends Controller
         $turno_num = turno::where('folio', '=', $request['idTurno'])->max("turno_num"); //seleccionamos el turno_num maximo 
         $turno_num++; // Sumamos '1' para hacer un consecutivo para crear el nuevo turno
 
-        //return response()->json($turno_num);
+        //return response()->json($turnadoa);
 
         return view('turno.crear', compact('correspondencia', 'turno_num', 'turnadoa', 'ccp', 'turnadopor', 'instrucciones', 'semaforo', 'now'));
     }
@@ -135,21 +137,23 @@ class TurnoController extends Controller
         
         $datosTurno = request()->except('_token');
 
-        $datosTurno['ccp'] = json_encode($request->ccp);
+        //$datosTurno['ccp'] = json_encode($request->ccp);
+        $ccpConver = $request->ccp;
+        $datosTurno['ccp'] = implode(',', $ccpConver);
         $datosTurno['user_id'] = auth()->id();
 
 
         $datosTurno['created_at'] = \Carbon\Carbon::now();
         $datosTurno['updated_at'] = \Carbon\Carbon::now();
 
-        //echo json_encode($datosTurno); exit;
-
         turno::insert($datosTurno);
 
         //return response()->json($datosTurno);
 
         //Enviar mensaje a la vista correspondencia ""with"
-        return redirect('correspondencia')->with('Mensaje','Turno agregado con éxito');
+        $ruta = 'turno/index/'.$request['folio'];
+        return redirect($ruta)->with('Mensaje','Turno agregado con éxito');
+        //return redirect()->route('turno/index/', [$request['folio']]);
     }
 
     /**
@@ -172,7 +176,59 @@ class TurnoController extends Controller
     public function edit($id)
     {
         //
+        $turno = turno::findOrFail($id);
+        $turnadoa = DB::table('turnadoccps')->orderBy('turnadoccps.nombre')->get();
+        $ccp = DB::table('turnadoccps')->orderBy('turnadoccps.nombre')->get();
+        $turnadopor = DB::table('turnadopors')->get();
+        $instrucciones = DB::table('instruccions')->get();
+
+        $ccpConvArray = explode(",", $turno['ccp']); //se convierte la cadena en arreglo
         
+        $now = Carbon::now();
+
+        $turnado_a = DB::table('turnos')
+            ->join('turnadoccps', 'turnos.turnado_a', '=', 'turnadoccps.id')
+            ->select('turnadoccps.id', 'turnadoccps.nombre')
+            ->where('turnos.id', '=', $id)
+            ->get();
+
+        $ccpSel = turnadoccp::whereIn('id', $ccpConvArray)
+            ->select('id', 'nombre')        
+            ->get();
+
+        $turnado_por = DB::table('turnos')
+            ->join('turnadopors', 'turnos.turnado_por', '=', 'turnadopors.id')
+            ->select('turnadopors.id', 'turnadopors.nombre')
+            ->where('turnos.id', '=', $id)
+            ->get();
+
+        $instruccion = DB::table('turnos')
+            ->join('instruccions', 'turnos.instruccion', '=', 'instruccions.id')
+            ->select('instruccions.id', 'instruccions.nombre')
+            ->where('turnos.id', '=', $id)
+            ->get();
+
+        $semaforo = DB::table('turnos')
+            ->join('semaforos', 'turnos.semaforo', '=', 'semaforos.id')
+            ->select('semaforos.id', 'semaforos.nombre')
+            ->where('turnos.id', '=', $id)
+            ->get();
+
+        //return response()->json($turno);
+
+        return view('turno/editar', [
+            'turno'             => $turno,
+            'turnadoa'          => $turnadoa,
+            'turnado_a'         => $turnado_a,
+            'ccp'               => $ccp,
+            'ccpSel'            => $ccpSel,
+            'turnado_por'       => $turnado_por,
+            'turnadopor'        => $turnadopor,
+            'instrucciones'     => $instrucciones,
+            'instruccion'       => $instruccion,
+            'semaforo'          => $semaforo,
+            'now'               => $now
+        ]);
     }
 
     /**
@@ -182,9 +238,21 @@ class TurnoController extends Controller
      * @param  \App\turno  $turno
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, turno $turno)
+    public function update(Request $request,  $id)
     {
         //
+        $datosTurno = request()->except(['_token','_method']);
+
+        $ccpConver = $request->ccp;
+        $datosTurno['ccp'] = implode(',', $ccpConver);
+        $datosTurno['user_id'] = auth()->id();
+
+        //return response()->json($datosTurno);
+        
+        turno::where('id', "=", $id)->update($datosTurno);
+
+        $ruta = 'turno/index/'.$request['folio'];
+        return redirect($ruta)->with('Mensaje','Turno modificado con éxito');
     }
 
     /**
@@ -280,5 +348,25 @@ class TurnoController extends Controller
         }
 
         return response()->json($resp); 
+    }
+
+    /**
+     * Funcion para cambiar el status a los turnos 
+     */
+    public function status($id)
+    {
+        //
+        //echo json_encode($id);exit;
+        $turno = turno::findOrFail($id);
+        
+        
+        $turno->status = 0;
+        $turno->save();
+
+        $result = turno::findOrFail($id);
+        
+        //return response()->json($result);
+        $ruta = 'turno/index/'.$result['folio'];
+        return redirect($ruta)->with('Mensaje','Turno modificado con éxito');
     }
 }

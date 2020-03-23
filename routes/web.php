@@ -76,6 +76,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('imprimir/{id}', 'CapturaCorrespondenciaController@exportpdf')->name('correspondencia.pdf')
             ->middleware('can:correspondencia.pdf');
 
+    //cambia el estatus de la correspondecia seleccionada
     Route::put('correspondencia/status/{id}', 'CapturaCorrespondenciaController@status')->name('correspondencia.status')
             ->middleware('can:correspondencia.status');
     
@@ -106,6 +107,10 @@ Route::middleware(['auth'])->group(function(){
 
     //Peticion ajax para autorrelleno de formulario correspondencia
     Route::post('turno/getajax','TurnoController@getajax')->name('turno.getajax');
+
+    //cambia el estatus del turno seleccionado
+    Route::put('turno/status/{id}', 'TurnoController@status')->name('turno.status')
+            ->middleware('can:turno.status');
     
     //Promotores y remitentes
     Route::post('promoremit/store', 'PromoremitController@store')->name('promoremit.store')
