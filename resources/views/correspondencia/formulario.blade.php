@@ -220,15 +220,15 @@
 
 <div class="form-group">
     <label class="control-label" for="asunto">{{'Asunto'}}</label>
-    <input 
-        type="text" 
+    <textarea 
         class="form-control {{ $errors->has('asunto') ? 'is-invalid' : ''  }}" 
+        rows="5" 
         name="asunto" 
-        id="asunto" 
-        value="{{ isset($correspondencia->asunto) ? $correspondencia->asunto : old('asunto') }}">
+        id="asunto">{{ isset($correspondencia->asunto) ? $correspondencia->asunto : old('asunto') }}
+    </textarea>
     <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
     {!! $errors->first('asunto','<div class="invalid-feedback">:message</div>') !!}
-</div>
+  </div>
 
 <div class="form-group">
     <label class="control-label" for="evento">{{'Evento'}}</label>
@@ -303,7 +303,7 @@
     </label>
 </div>
 
-<div class="form-group">
+{{-- <div class="form-group">
     <label for="foto" class="control-label">{{'Foto'}}</label>
     @if(isset($correspondencia->foto))
         <br>
@@ -318,7 +318,7 @@
         value="{{ isset($correspondencia->foto) ? $correspondencia->foto : '' }}">
     <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
     {!! $errors->first('foto','<div class="invalid-feedback">:message</div>') !!}
-</div>
+</div> --}}
 
 <input type="submit" class="btn btn-success" value="{{$Modo == 'crear' ? 'Agregar' : 'Modificar'}}">
 

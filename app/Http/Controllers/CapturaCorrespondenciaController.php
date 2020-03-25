@@ -34,6 +34,7 @@ class CapturaCorrespondenciaController extends Controller
                  'promoremits.nombre as promotor', 
                  'dirigidos.nombre as dirigido', 
                  'captura_correspondencias.asunto', 
+                 'captura_correspondencias.date_acuse', 
                  'captura_correspondencias.foto')
         ->nument($num_entrada)
         ->asunto($asunto)
@@ -99,6 +100,21 @@ class CapturaCorrespondenciaController extends Controller
      */
     public function store(Request $request)
     {
+        //return response()->json($request);
+        //validar si los campos con Fk vienen vacios usar el registro auxiliar
+        if($request['remitente_id'] == 0){
+            $request['remitente_id'] = 1817;
+        }
+        if($request['dirigido_id'] == 0){
+            $request['dirigido_id'] = 3746;
+        }
+        if($request['tipo_id'] == 0){
+            $request['tipo_id'] = 38;
+        }
+        if($request['expediente_id'] == 0){
+            $request['expediente_id'] = 201;
+        }
+
         //Validacion de que los campos vengan llenos con la informacion correspondiente
         $campos =[
             'num_entrada' => 'required|string|max:150',
@@ -108,15 +124,13 @@ class CapturaCorrespondenciaController extends Controller
             /* 'referencia' => 'required|string|max:150', */
             'promotor_id' => 'required|string|max:150',
             /* 'remitente' => 'required|string|max:150', */
-            'dirigido_id' => 'required|string|max:150',/* 
+            /*'dirigido_id' => 'required|string|max:150',/* 
             'antecedente' => 'required|string|max:150',
             'particular' => 'required|string|max:150', */
             'firmado_por' => 'required|string|max:150',
             'cargo' => 'required|string|max:150',
-            'tipo_id' => 'required|string|max:150',
-            'expediente_id' => 'required|string|max:150',
-            'clasificacion' => 'required|string|max:150',
-            'asunto' => 'required|string|max:150'/* ,
+            /* 'clasificacion' => 'required|string|max:150', */
+            'asunto' => 'required|string'/* ,
             'evento' => 'required|string|max:150',
             'date_evento' => 'required|string|max:150',
             'hora_evento' => 'required|string|max:150',
@@ -134,7 +148,7 @@ class CapturaCorrespondenciaController extends Controller
         /** Al recabar la informacion evitar que el campo token se inserte en la BD */
         $datosCorrespondencia = request()->except('_token');
 
-        $datosCorrespondencia['user_id'] = auth()->id();
+        $datosCorrespondencia['user_id'] = auth()->id(); //insertar el usuario que esta registrando
        
         /** Recoleccion de la foto */
         if( $request->hasFile('foto') ){
@@ -143,8 +157,6 @@ class CapturaCorrespondenciaController extends Controller
 
         $datosCorrespondencia['created_at'] = \Carbon\Carbon::now();
         $datosCorrespondencia['updated_at'] = \Carbon\Carbon::now();
-
-        //echo json_encode($datosCorrespondencia); exit;
 
         capturaCorrespondencia::insert($datosCorrespondencia);
 
@@ -240,7 +252,7 @@ class CapturaCorrespondenciaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        //return response()->json($request);
         //Validacion de que los campos vengan llenos con la informacion correspondiente
         $campos =[
             'num_entrada' => 'required|string|max:150',
@@ -258,7 +270,7 @@ class CapturaCorrespondenciaController extends Controller
             'tipo_id' => 'required|string|max:150',
             'expediente_id' => 'required|string|max:150',
             'clasificacion' => 'required|string|max:150',
-            'asunto' => 'required|string|max:150'/* ,
+            'asunto' => 'required|string'/* ,
             'evento' => 'required|string|max:150',
             'date_evento' => 'required|string|max:150',
             'hora_evento' => 'required|string|max:150',

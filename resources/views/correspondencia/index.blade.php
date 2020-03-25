@@ -41,12 +41,10 @@
         <thead class="thead-light">
             <tr>
                 <th>#</th>
-                <th>Numero de Entrada</th>
                 <th>Referencia</th>
                 <th>Promotor</th>
-                <th>Dirigido</th>
                 <th>Asunto</th>
-                <th>Foto</th>
+                <th>Fecha</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -55,14 +53,10 @@
             @foreach($correspondencia as $correspon)
                 <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td>{{$correspon->num_entrada}}</td>
                     <td>{{$correspon->referencia}}</td>
                     <td>{{$correspon->promotor}}</td>
-                    <td>{{$correspon->dirigido}}</td>
                     <td>{{$correspon->asunto}}</td>
-                    <td>
-                        <img src="{{ asset('storage').'/'.$correspon->foto}}" class="img-thumbnail img-fluid" alt="" width="50">
-                    </td>
+                    <td>{{$correspon->date_acuse}}</td>
                     <td>
                         @can('correspondencia.edit')
                         <a href="{{ url('/correspondencia/'.$correspon->id.'/edit') }}" class="btn btn-warning">
