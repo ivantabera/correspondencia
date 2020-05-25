@@ -47,6 +47,9 @@
                     @can('correspondencia.index')
                         <a href="{{ url('correspondencia') }}">Correspondencia</a>
                     @endcan
+                    @can('turno.index')
+                        <a href="{{ url('turno') }}">Turno</a>
+                    @endcan
                     @can('promoremit.index')
                         <a href="{{ url('promoremit') }}">Promotores y remitentes</a>
                     @endcan

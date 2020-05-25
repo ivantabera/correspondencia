@@ -19,6 +19,7 @@
     
     <script src="{{ asset('js/formularioCorrespondencia.js') }}"></script>
     <script src="{{ asset('js/formularioTurno.js') }}"></script>
+    <script src="{{ asset('js/correspondenciaIndex.js') }}"></script>
     
     @yield('script')
 
@@ -29,6 +30,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/misEstilos.css') }}" rel="stylesheet">
     
 </head>
 <body>
@@ -51,6 +53,14 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                                 <a class="nav-link" href="{{ route('correspondencia.index') }}">{{ __('Correspondencia') }}</a>
+                            </li>
+                    </ul>
+                    @endcan()
+
+                    @can('turno.index')
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('turno.index') }}">{{ __('Turno') }}</a>
                             </li>
                     </ul>
                     @endcan()

@@ -1,0 +1,13 @@
+.formBaja {
+    text-align: justify;
+}
+
+.bajaFormInput {
+    width: 50%;
+    font-size: 11px;
+}
+
+.btnAccion{
+    font-size: 12px;
+    padding: 2px;
+}

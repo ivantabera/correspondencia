@@ -50,9 +50,11 @@
     <label class="control-label" for="turnado_a">{{'Turnado a'}}</label>
     <select 
         class="form-control {{ $errors->has('turnado_a') ? 'is-invalid' : ''  }} turnado_a" 
-        name="turnado_a" 
+        name="turnado_a[]" 
         id="turnado_a" 
-        value="{{ isset($turnadoa->id) ? $turnadoa->id : old('turnado_a') }}">
+        value="{{ isset($turnadoa->id) ? $turnadoa->id : old('turnado_a') }}"
+        multiple
+        size="5">
         @if(isset($turnado_a))
         <option value="{{$turnado_a[0]->id}}">{{$turnado_a[0]->nombre}}</option>
         @else
@@ -72,7 +74,7 @@
         class="form-control {{ $errors->has('ccp') ? 'is-invalid' : ''  }} ccp" 
         name="ccp[]" 
         id="ccp" 
-        value="{{ isset($ccpSel->id) ? $ccpSel->id : "" }}"
+        value="{{ isset($ccpSel->id) ? $ccpSel->id : '' }}"
         multiple
         size="5">
         @if(isset($ccpSel))

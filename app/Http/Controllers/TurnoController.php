@@ -19,9 +19,113 @@ class TurnoController extends Controller
      */
     public function index(Request $request)
     {
-        //
+        // 
+        $num_entrada = $request->get('num_entrada');
+        $asunto      = $request->get('asunto');
+        $referencia  = $request->get('referencia');
 
-        return view('turno.index');
+        $correspondencia = capturaCorrespondencia::where('status', '=', '1')
+        ->where('turnado', '=', '0')
+        ->where('baja', '=', '0')
+        ->join('promoremits', 'captura_correspondencias.promotor_id', '=', 'promoremits.id')
+        ->join('dirigidos', 'captura_correspondencias.dirigido_id', '=', 'dirigidos.id')
+        ->select('captura_correspondencias.id', 
+                 'captura_correspondencias.num_entrada', 
+                 'captura_correspondencias.referencia', 
+                 'promoremits.nombre as promotor', 
+                 'dirigidos.nombre as dirigido', 
+                 'captura_correspondencias.asunto', 
+                 'captura_correspondencias.date_acuse', 
+                 'captura_correspondencias.foto')
+                 ->orderBy('captura_correspondencias.id', 'desc')
+        ->nument($num_entrada)
+        ->asunto($asunto)
+        ->referencia($referencia)
+        ->paginate(5);
+        
+        foreach ($correspondencia as $val) {
+            
+            $cant = strlen($val['num_entrada']);
+
+            if($cant == 1){
+                $val['num_entrada'] = 'SDGM20-000'. $val['num_entrada'];
+            } elseif($cant == 2){
+                $val['num_entrada'] = 'SDGM20-00'. $val['num_entrada'];
+            } elseif($cant == 3){
+                $val['num_entrada'] = 'SDGM20-0'. $val['num_entrada'];
+            }
+        }
+
+        //turnados
+        $correspondenciaTurnados = capturaCorrespondencia::where('status', '=', '1')
+        ->where('turnado', '=', '1')
+        ->where('baja', '=', '0')
+        ->join('promoremits', 'captura_correspondencias.promotor_id', '=', 'promoremits.id')
+        ->join('dirigidos', 'captura_correspondencias.dirigido_id', '=', 'dirigidos.id')
+        ->select('captura_correspondencias.id', 
+                 'captura_correspondencias.num_entrada', 
+                 'captura_correspondencias.referencia', 
+                 'promoremits.nombre as promotor', 
+                 'dirigidos.nombre as dirigido', 
+                 'captura_correspondencias.asunto', 
+                 'captura_correspondencias.date_acuse', 
+                 'captura_correspondencias.foto')
+                 ->orderBy('captura_correspondencias.id', 'desc')
+        ->nument($num_entrada)
+        ->asunto($asunto)
+        ->referencia($referencia)
+        ->paginate(5);
+        
+        foreach ($correspondenciaTurnados as $val) {
+            
+            $cant = strlen($val['num_entrada']);
+
+            if($cant == 1){
+                $val['num_entrada'] = 'SDGM20-000'. $val['num_entrada'];
+            } elseif($cant == 2){
+                $val['num_entrada'] = 'SDGM20-00'. $val['num_entrada'];
+            } elseif($cant == 3){
+                $val['num_entrada'] = 'SDGM20-0'. $val['num_entrada'];
+            }
+        }
+
+        //turnados
+        $correspondenciaTurnadosBaja = capturaCorrespondencia::where('status', '=', '1')
+        ->where('turnado', '=', '1')
+        ->where('baja', '=', '1')
+        ->join('promoremits', 'captura_correspondencias.promotor_id', '=', 'promoremits.id')
+        ->join('dirigidos', 'captura_correspondencias.dirigido_id', '=', 'dirigidos.id')
+        ->select('captura_correspondencias.id', 
+                 'captura_correspondencias.num_entrada', 
+                 'captura_correspondencias.referencia', 
+                 'promoremits.nombre as promotor', 
+                 'dirigidos.nombre as dirigido', 
+                 'captura_correspondencias.asunto', 
+                 'captura_correspondencias.date_acuse', 
+                 'captura_correspondencias.foto')
+                 ->orderBy('captura_correspondencias.id', 'desc')
+        ->nument($num_entrada)
+        ->asunto($asunto)
+        ->referencia($referencia)
+        ->paginate(5);
+        
+        foreach ($correspondenciaTurnados as $val) {
+            
+            $cant = strlen($val['num_entrada']);
+
+            if($cant == 1){
+                $val['num_entrada'] = 'SDGM20-000'. $val['num_entrada'];
+            } elseif($cant == 2){
+                $val['num_entrada'] = 'SDGM20-00'. $val['num_entrada'];
+            } elseif($cant == 3){
+                $val['num_entrada'] = 'SDGM20-0'. $val['num_entrada'];
+            }
+        }
+
+        //return response()->json($correspondencia);
+
+        //Alert::success('Success Title', 'Success Message');
+        return view('turno.index', compact('correspondencia','correspondenciaTurnados', 'correspondenciaTurnadosBaja'));
     }
 
     /**
@@ -32,7 +136,6 @@ class TurnoController extends Controller
     public function indexturno($id)
     {
         //
-        
         $turno = turno::where('folio', '=', $id) //consulta para mostrar en la vista la informacion de los turnos de correspondencia 
         ->where('status', '=', '1')
         ->join('turnadoccps', 'turnos.turnado_a', '=', 'turnadoccps.id')
@@ -76,15 +179,15 @@ class TurnoController extends Controller
         $correspondencia = capturaCorrespondencia::findOrFail($id);
 
             
-            $cant = strlen($correspondencia['num_entrada']);
+        $cant = strlen($correspondencia['num_entrada']);
 
-            if($cant == 1){
-                $correspondencia['num_entrada'] = 'SDGM20-000'. $correspondencia['num_entrada'];
-            } elseif($cant == 2){
-                $correspondencia['num_entrada'] = 'SDGM20-00'. $correspondencia['num_entrada'];
-            } elseif($cant == 3){
-                $correspondencia['num_entrada'] = 'SDGM20-0'. $correspondencia['num_entrada'];
-            }
+        if($cant == 1){
+            $correspondencia['num_entrada'] = 'SDGM20-000'. $correspondencia['num_entrada'];
+        } elseif($cant == 2){
+            $correspondencia['num_entrada'] = 'SDGM20-00'. $correspondencia['num_entrada'];
+        } elseif($cant == 3){
+            $correspondencia['num_entrada'] = 'SDGM20-0'. $correspondencia['num_entrada'];
+        }
 
         $now = Carbon::now();
         $turnadoa = DB::table('turnadoccps')->orderBy('turnadoccps.nombre')->get();
@@ -109,7 +212,6 @@ class TurnoController extends Controller
      */
     public function store(Request $request)
     {
-
         //
         //Validacion de que los campos vengan llenos con la informacion correspondiente
 
@@ -134,13 +236,23 @@ class TurnoController extends Controller
         //$datosTurno = request()->all();
 
         /** Al recabar la informacion evitar que el campo token se inserte en la BD */
-        
         $datosTurno = request()->except('_token');
 
-        //$datosTurno['ccp'] = json_encode($request->ccp);
         $ccpConver = $request->ccp;
         $datosTurno['ccp'] = implode(',', $ccpConver);
+
+        $turnadoaConver = $request->turnado_a;
+        $datosTurno['turnado_a'] = implode(',', $turnadoaConver);
+
         $datosTurno['user_id'] = auth()->id();
+
+        //activar bandera de correspondencia turnada
+        $correspondencia = capturaCorrespondencia::find($datosTurno['folio']);
+
+        if($correspondencia){
+            $correspondencia->turnado = 1;
+            $correspondencia->save();
+        }
 
 
         $datosTurno['created_at'] = \Carbon\Carbon::now();
@@ -151,9 +263,9 @@ class TurnoController extends Controller
         //return response()->json($datosTurno);
 
         //Enviar mensaje a la vista correspondencia ""with"
-        $ruta = 'turno/index/'.$request['folio'];
+        /* $ruta = 'turno/index/'.$request['folio']; */
+        $ruta = 'turno';
         return redirect($ruta)->with('Mensaje','Turno agregado con éxito');
-        //return redirect()->route('turno/index/', [$request['folio']]);
     }
 
     /**

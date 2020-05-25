@@ -55,6 +55,30 @@
                         </a>
                         @endcan()
                         
+                        @can('turno.status')
+                        <form method="post" action="{{ url('/turno/status/'.$turn->id) }}" class="formStatus" style="display:inline">
+                            {{ csrf_field() }} <!--token para que nos permita acceder-->
+                            {{ method_field('PUT') }} <!--metodo que vamos a ejecutar-->
+                            <button 
+                                type="submit" 
+                                onclick="event.preventDefault();
+                                    Swal.fire({
+                                    title: '¿Deseas archivar este registro de turno?',
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Aceptar',
+                                    cancelButtonText: 'Cancelar'
+                                    }).then((result) => {
+                                    if (result.value) {
+                                        submit();
+                                    } 
+                                    }); " 
+                                class="btn btn-success changestatus" >
+                                Archivar
+                            </button>
+                        </form>
+                        @endcan()
+
                         {{-- Formulario que cambia de status --}}
                         @can('turno.status')
                         <form method="post" action="{{ url('/turno/status/'.$turn->id) }}" class="formStatus" style="display:inline">

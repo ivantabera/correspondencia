@@ -23,7 +23,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="hora_acuse">{{'Hora de Acuse'}}</label>
+    <!-- <label class="control-label" for="hora_acuse">{{'Hora de Acuse'}}</label> -->
     <input 
         type="time" 
         class="form-control {{ $errors->has('hora_acuse') ? 'is-invalid' : ''  }}" 
@@ -47,7 +47,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="referencia">{{'Referencia'}}</label>
+    <label class="control-label" for="referencia">{{'Numero de Oficio'}}</label>
     <input 
         type="text" 
         class="form-control {{ $errors->has('referencia') ? 'is-invalid' : ''  }}" 
@@ -59,7 +59,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="promotor_id">{{'Promotor'}}</label>
+    <label class="control-label" for="promotor_id">{{'Dependencia'}}</label>
     <select 
         class="form-control {{ $errors->has('Promotor') ? 'is-invalid' : ''  }} promotor" 
         name="promotor_id" 
@@ -79,7 +79,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="remitente_id">{{'Remitente'}}</label>
+    <!-- <label class="control-label" for="remitente_id">{{'Remitente'}}</label> -->
     <select 
         class="form-control {{ $errors->has('remitente') ? 'is-invalid' : ''  }} remitente" 
         name="remitente_id" 
@@ -99,7 +99,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="dirigido_id">{{'Dirigido A'}}</label>
+    <!-- <label class="control-label" for="dirigido_id">{{'Dirigido A'}}</label> -->
     <select 
         class="form-control {{ $errors->has('dirigido') ? 'is-invalid' : ''  }} dirigido" 
         name="dirigido_id" 
@@ -119,7 +119,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="antecedente">{{'Antecedente'}}</label>
+    <!-- <label class="control-label" for="antecedente">{{'Antecedente'}}</label> -->
     <input 
         type="text" 
         class="form-control {{ $errors->has('antecedente') ? 'is-invalid' : ''  }}" 
@@ -131,7 +131,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="particular">{{'Particular'}}</label>
+    <!-- <label class="control-label" for="particular">{{'Particular'}}</label> -->
     <input 
         type="text" 
         class="form-control {{ $errors->has('particular') ? 'is-invalid' : ''  }}" 
@@ -143,7 +143,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="firmado_por">{{'Firmado por'}}</label>
+    <!-- <label class="control-label" for="firmado_por">{{'Firmado por'}}</label> -->
     <input 
         type="text" 
         class="form-control {{ $errors->has('firmado_por') ? 'is-invalid' : ''  }} firmado_por" 
@@ -155,7 +155,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="cargo">{{'Cargo'}}</label>
+    <!-- <label class="control-label" for="cargo">{{'Cargo'}}</label> -->
     <input 
         type="text" 
         class="form-control {{ $errors->has('cargo') ? 'is-invalid' : ''  }} cargo" 
@@ -187,7 +187,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="expediente_id">{{'Expediente'}}</label>
+    <!-- <label class="control-label" for="expediente_id">{{'Expediente'}}</label> -->
     <select 
         class="form-control {{ $errors->has('tipo') ? 'is-invalid' : ''  }} expediente" 
         name="expediente_id" 
@@ -207,7 +207,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="clasificacion">{{'Clasificación'}}</label>
+    <!-- <label class="control-label" for="clasificacion">{{'Clasificación'}}</label> -->
     <input 
         type="text" 
         class="form-control {{ $errors->has('clasificacion') ? 'is-invalid' : ''  }}" 
@@ -224,14 +224,18 @@
         class="form-control {{ $errors->has('asunto') ? 'is-invalid' : ''  }}" 
         rows="5" 
         name="asunto" 
-        id="asunto">{{ isset($correspondencia->asunto) ? $correspondencia->asunto : old('asunto') }}
-    </textarea>
+        id="asunto">{{ isset($correspondencia->asunto) ? $correspondencia->asunto : old('asunto') }}</textarea>
     <!--mensaje para mostrar el error si el formulario viene vacio o formato invalido-->
     {!! $errors->first('asunto','<div class="invalid-feedback">:message</div>') !!}
   </div>
 
 <div class="form-group">
-    <label class="control-label" for="evento">{{'Evento'}}</label>
+    <label class="control-label" for="event">Registrar evento</label>
+    <input type="checkbox" id="regEvent" class="regEvent">
+</div>
+
+<div class="form-group">
+    <label class="control-label" for="evento" id="lbEvento">{{'Evento'}}</label>
     <input 
         type="text" 
         class="form-control {{ $errors->has('evento') ? 'is-invalid' : ''  }}" 
@@ -243,7 +247,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="date_evento">{{'Fecha del evento'}}</label>
+    <label class="control-label" for="date_evento" id="lbDateEvent">{{'Fecha del evento'}}</label>
     <input 
         type="date" 
         class="form-control {{ $errors->has('date_evento') ? 'is-invalid' : ''  }}" 
@@ -255,7 +259,7 @@
 </div>
 
 <div class="form-group">
-    <label class="control-label" for="hora_evento">{{'Hora de evento'}}</label>
+    <label class="control-label" for="hora_evento" id="lbHorEvento">{{'Hora de evento'}}</label>
     <input 
         type="time" 
         class="form-control {{ $errors->has('hora_evento') ? 'is-invalid' : ''  }}" 
@@ -283,7 +287,7 @@
             name="prioridad" 
             value="2" 
             {{ isset($correspondencia->prioridad) ? ($correspondencia->prioridad== '2' ? "checked" : '') : '' }}>
-            Intersecretarial
+            Confidencial
     </label>
     <label class="radio-inline">
         <input 
@@ -291,14 +295,6 @@
             name="prioridad" 
             value="3" 
             {{ isset($correspondencia->prioridad) ? ($correspondencia->prioridad== '3' ? "checked" : '') : '' }}>
-            Confidencial
-    </label>
-    <label class="radio-inline">
-        <input 
-            type="radio" 
-            name="prioridad" 
-            value="4" 
-            {{ isset($correspondencia->prioridad) ? ($correspondencia->prioridad== '4' ? "checked" : '') : '' }}>
             Salida
     </label>
 </div>

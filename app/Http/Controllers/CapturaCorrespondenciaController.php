@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\bajaTurno;
 use App\capturaCorrespondencia;
 use App\promoremit;
+use App\turnadoccp;
+use App\turnadopor;
+use App\turno;
 use PDF;
 use Dompdf\Options;
 use Carbon\Carbon;
@@ -21,11 +25,14 @@ class CapturaCorrespondenciaController extends Controller
      */
     public function index(Request $request)
     {
+        // 
         $num_entrada = $request->get('num_entrada');
         $asunto      = $request->get('asunto');
         $referencia  = $request->get('referencia');
 
         $correspondencia = capturaCorrespondencia::where('status', '=', '1')
+        ->where('turnado', '=', '0')
+        ->where('baja', '=', '0')
         ->join('promoremits', 'captura_correspondencias.promotor_id', '=', 'promoremits.id')
         ->join('dirigidos', 'captura_correspondencias.dirigido_id', '=', 'dirigidos.id')
         ->select('captura_correspondencias.id', 
@@ -36,6 +43,7 @@ class CapturaCorrespondenciaController extends Controller
                  'captura_correspondencias.asunto', 
                  'captura_correspondencias.date_acuse', 
                  'captura_correspondencias.foto')
+                 ->orderBy('captura_correspondencias.id', 'desc')
         ->nument($num_entrada)
         ->asunto($asunto)
         ->referencia($referencia)
@@ -54,10 +62,76 @@ class CapturaCorrespondenciaController extends Controller
             }
         }
 
+        //turnados
+        $correspondenciaTurnados = capturaCorrespondencia::where('status', '=', '1')
+        ->where('turnado', '=', '1')
+        ->where('baja', '=', '0')
+        ->join('promoremits', 'captura_correspondencias.promotor_id', '=', 'promoremits.id')
+        ->join('dirigidos', 'captura_correspondencias.dirigido_id', '=', 'dirigidos.id')
+        ->select('captura_correspondencias.id', 
+                 'captura_correspondencias.num_entrada', 
+                 'captura_correspondencias.referencia', 
+                 'promoremits.nombre as promotor', 
+                 'dirigidos.nombre as dirigido', 
+                 'captura_correspondencias.asunto', 
+                 'captura_correspondencias.date_acuse', 
+                 'captura_correspondencias.foto')
+                 ->orderBy('captura_correspondencias.id', 'desc')
+        ->nument($num_entrada)
+        ->asunto($asunto)
+        ->referencia($referencia)
+        ->paginate(5);
+        
+        foreach ($correspondenciaTurnados as $val) {
+            
+            $cant = strlen($val['num_entrada']);
+
+            if($cant == 1){
+                $val['num_entrada'] = 'SDGM20-000'. $val['num_entrada'];
+            } elseif($cant == 2){
+                $val['num_entrada'] = 'SDGM20-00'. $val['num_entrada'];
+            } elseif($cant == 3){
+                $val['num_entrada'] = 'SDGM20-0'. $val['num_entrada'];
+            }
+        }
+
+        //turnados
+        $correspondenciaTurnadosBaja = capturaCorrespondencia::where('status', '=', '1')
+        ->where('turnado', '=', '1')
+        ->where('baja', '=', '1')
+        ->join('promoremits', 'captura_correspondencias.promotor_id', '=', 'promoremits.id')
+        ->join('dirigidos', 'captura_correspondencias.dirigido_id', '=', 'dirigidos.id')
+        ->select('captura_correspondencias.id', 
+                 'captura_correspondencias.num_entrada', 
+                 'captura_correspondencias.referencia', 
+                 'promoremits.nombre as promotor', 
+                 'dirigidos.nombre as dirigido', 
+                 'captura_correspondencias.asunto', 
+                 'captura_correspondencias.date_acuse', 
+                 'captura_correspondencias.foto')
+                 ->orderBy('captura_correspondencias.id', 'desc')
+        ->nument($num_entrada)
+        ->asunto($asunto)
+        ->referencia($referencia)
+        ->paginate(5);
+        
+        foreach ($correspondenciaTurnados as $val) {
+            
+            $cant = strlen($val['num_entrada']);
+
+            if($cant == 1){
+                $val['num_entrada'] = 'SDGM20-000'. $val['num_entrada'];
+            } elseif($cant == 2){
+                $val['num_entrada'] = 'SDGM20-00'. $val['num_entrada'];
+            } elseif($cant == 3){
+                $val['num_entrada'] = 'SDGM20-0'. $val['num_entrada'];
+            }
+        }
+
         //return response()->json($correspondencia);
 
         //Alert::success('Success Title', 'Success Message');
-        return view('correspondencia.index', compact('correspondencia'));
+        return view('correspondencia.index', compact('correspondencia','correspondenciaTurnados', 'correspondenciaTurnadosBaja'));
     }
 
     /**
@@ -126,10 +200,10 @@ class CapturaCorrespondenciaController extends Controller
             /* 'remitente' => 'required|string|max:150', */
             /*'dirigido_id' => 'required|string|max:150',/* 
             'antecedente' => 'required|string|max:150',
-            'particular' => 'required|string|max:150', */
+            'particular' => 'required|string|max:150', 
             'firmado_por' => 'required|string|max:150',
             'cargo' => 'required|string|max:150',
-            /* 'clasificacion' => 'required|string|max:150', */
+           'clasificacion' => 'required|string|max:150', */
             'asunto' => 'required|string'/* ,
             'evento' => 'required|string|max:150',
             'date_evento' => 'required|string|max:150',
@@ -262,14 +336,12 @@ class CapturaCorrespondenciaController extends Controller
             /* 'referencia' => 'required|string|max:150', */
             'promotor_id' => 'required|string|max:150',
             /* 'remitente' => 'required|string|max:150', */
-            'dirigido_id' => 'required|string|max:150',/* 
+            /*'dirigido_id' => 'required|string|max:150',/* 
             'antecedente' => 'required|string|max:150',
             'particular' => 'required|string|max:150', */
             'firmado_por' => 'required|string|max:150',
             'cargo' => 'required|string|max:150',
-            'tipo_id' => 'required|string|max:150',
-            'expediente_id' => 'required|string|max:150',
-            'clasificacion' => 'required|string|max:150',
+            /* 'clasificacion' => 'required|string|max:150', */
             'asunto' => 'required|string'/* ,
             'evento' => 'required|string|max:150',
             'date_evento' => 'required|string|max:150',
@@ -332,12 +404,16 @@ class CapturaCorrespondenciaController extends Controller
     public function exportpdf($id){
 
         $correspondencia = capturaCorrespondencia::findOrFail($id);
-
-        /* echo json_encode($correspondencia);exit;
-        return response()->json($correspondencia); */
+        $turno = turno::where('folio', '=', $id)->get();
+        //return response()->json($turno[0]['turnado_a']);
+        $para = turnadoccp::findOrFail($turno[0]['turnado_a']);
+        $de = turnadopor::findOrFail($turno[0]['turnado_por']);
 
         $pdf = PDF::loadView('pdf.correspondencia', [
-            'correspondencia' => $correspondencia
+            'correspondencia'   => $correspondencia,
+            'turno'             => $turno[0], 
+            'para'              => $para,
+            'de'                => $de
         ]);
 
         return $pdf->download('correspondencia.pdf'); 
@@ -357,6 +433,43 @@ class CapturaCorrespondenciaController extends Controller
         
         //return redirect('correspondencia');
         return redirect('correspondencia')->with('Mensaje','Correspondencia eliminada');
+    }
+
+
+    /**
+     * Peticion para registrar la baja del documento
+     *
+     */
+    public function ajaxbaja()
+    {
+        //
+        $resp = array('s' => 0, 'm' => ''); 
+
+        $data = array();
+        $data = array_merge($data, (array) $_POST);
+
+        $correspondencia = capturaCorrespondencia::find($data['idBaja']);
+
+        if($correspondencia){
+
+            $correspondencia->baja = 1;
+            $correspondencia->save();
+
+            $data['created_at'] = \Carbon\Carbon::now();
+            $data['updated_at'] = \Carbon\Carbon::now();
+
+            bajaTurno::insert($data);
+            
+            $resp['s'] = 1;
+			$resp['m'] = 'success';
+            $resp['correspondencia'] = $correspondencia;
+            $resp['data'] = $data;
+        }else{
+            $resp['s'] = 0;
+			$resp['m'] = 'error, no hay registro';
+        }
+
+        return response()->json($resp);
     }
 
 }

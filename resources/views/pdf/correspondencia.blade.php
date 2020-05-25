@@ -5,28 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style type="text/css">
+      .logoMetro{
+        width: 30%;
+      }
+    </style>
 </head>
 <body>
     <table>
         <tr>
           <th colspan="4">
-            <img src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/stc.png';?>"/>
+            <img class="logoMetro" src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/stc.png';?>"/>
           </th>
           <th colspan="4">Turno de Correspondencia</th>
-          <th colspan="4">subdireccion general de mantenimiento</th>
+          <th colspan="4">Subdirección General de Mantenimiento</th>
         </tr>
         <tr>
           <td colspan="2">Para:</td>
-          <td colspan="6">GIF</td>
+          <td colspan="6">{{ isset($para->area) ? $para->area : 'Sin area' }}</td>
           <td colspan="4">Recepcíon</td>
         </tr>
         <tr>
           <td colspan="2">De:</td>
-          <td colspan="6">Ing. Jorge Juárez Balderas</td>
+          <td colspan="6">{{ isset($de->nombre) ? $de->nombre : 'Sin nombre' }}</td>
           <td colspan="4">
-              Folio: acuse
-              Fecha: acuse
-              Hora: acuse
+              Folio: {{ isset($turno->oficio) ? $turno->oficio : 'Sin oficio' }} <br>
+              Fecha: {{ isset($correspondencia->date_acuse) ? $correspondencia->date_acuse : 'Sin fecha' }} <br>
+              Hora: {{ isset($correspondencia->hora_acuse) ? $correspondencia->hora_acuse : 'Sin hora' }}
           </td>
         </tr>
         <tr>
@@ -34,8 +39,9 @@
         </tr>
         <tr>
           <td colspan="12">
-              Número: referencia  {{ isset($correspondencia->referencia) ? $correspondencia->referencia : 'referencia nula' }} <br>
-              Fecha del oficio: elaboracion  {{ isset($correspondencia->asunto) ? $correspondencia->asunto : 'asunto nulo' }} <br>
+              Número de referencia:  {{ isset($correspondencia->referencia) ? $correspondencia->referencia : 'referencia nula' }} <br>
+              Oficio: {{ isset($turno->oficio) ? $turno->oficio : 'S/N' }} <br>
+              Fecha del oficio: {{ isset($turno->fecha_turno) ? $turno->fecha_turno : 'S/F' }}  <br>
               Área: promotor  {{ isset($correspondencia->num_entrada) ? $correspondencia->num_entrada : 'num_entrada nulo' }}
           </td>
         </tr>
@@ -43,15 +49,15 @@
           <td colspan="12">Asunto</td>
         </tr>
         <tr>
-          <td colspan="12">asunto</td>
+          <td colspan="12">{{ isset($correspondencia->asunto) ? $correspondencia->asunto : 'asunto nulo' }}</td>
         </tr>
         <tr>
           <td colspan="12">Instrucciones</td>
         </tr>
         <tr>
           <td colspan="12">
-              Intstrucción: combo 
-              Intrucciones adicionales: captura
+              Instrucción:  <br>
+              Intrucciones adicionales: {{ isset($turno->instruccion_adicional) ? $turno->instruccion_adicional : 'Instruccion nula' }} 
           </td>
         </tr>
         <tr>
@@ -69,7 +75,8 @@
             <td colspan="3">ap</td>
           </tr>
         <tr>
-          <td colspan="12">Fecha compromiso: dd/mm/yyyy .- 'requiere respuesta ordinaria' semaforo</td>
+          <td colspan="12">Fecha compromiso: {{ isset($turno->compromiso_date) ? $turno->compromiso_date : 'Sin compromiso' }}
+            <br>Compromiso: {{ isset($turno->respuesta_auto) ? $turno->respuesta_auto : 'Instruccion nula' }}</td>
         </tr>
         <tr>
           <td colspan="12">
@@ -90,24 +97,5 @@
           <td colspan="12">Cccep:</td>
         </tr>
       </table>
-
-    {{-- <table>
-        <thead>
-            <tr>
-                <th>Numero de entrada</th>
-                <th>Asunto</th>
-                <th>Referencia</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($correspondencia as $corres)
-                <tr>
-                    <td>{{ $corres->num_entrada }}</td>
-                    <td>{{ $corres->asunto }}</td>
-                    <td>{{ $corres->referencia }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table> --}}
 </body>
 </html>

@@ -79,6 +79,9 @@ Route::middleware(['auth'])->group(function(){
     //cambia el estatus de la correspondecia seleccionada
     Route::put('correspondencia/status/{id}', 'CapturaCorrespondenciaController@status')->name('correspondencia.status')
             ->middleware('can:correspondencia.status');
+
+    //Peticion ajax para dar de baja correspondencia
+    Route::post('correspondencia/baja','CapturaCorrespondenciaController@ajaxbaja')->name('correspondencia.ajaxbaja');
     
     //turno
     Route::post('turno/store', 'TurnoController@store')->name('turno.store')
